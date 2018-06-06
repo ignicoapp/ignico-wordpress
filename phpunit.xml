@@ -1,0 +1,25 @@
+<phpunit
+	backupGlobals="false"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+
+	bootstrap="tests/bootstrap.php"
+
+	beStrictAboutTestsThatDoNotTestAnything="false"
+	>
+
+	<!-- It is mandatory to configure a whitelist for telling PHPUnit which sourcecode files to include in the code coverage report. -->
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">./inc</directory>
+	  </whitelist>
+	</filter>
+
+	<!-- Define test suite to tell phpunit which file to test without giving directory name as cli argument. -->
+	<testsuites>
+		<testsuite name="Ignico for WordPress test suite">
+			<directory suffix="-test.php">./tests</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
