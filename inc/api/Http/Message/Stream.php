@@ -37,7 +37,7 @@ class Stream implements StreamInterface {
 	 *
 	 * @param string $string
 	 */
-	public function __construct( string $string ) {
+	public function __construct( $string ) {
 		$this->stream = fopen( 'php://memory', 'r+' );
 
 		$this->write( $string );

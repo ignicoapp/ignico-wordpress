@@ -269,7 +269,7 @@ class Message implements MessageInterface {
 	 *
 	 * @return string Normalized message header name
 	 */
-	private function normalizeHeaderName( string $name ) {
+	private function normalizeHeaderName( $name ) {
 		return strtolower( trim( $name ) );
 	}
 }
