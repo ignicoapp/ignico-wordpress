@@ -6,14 +6,6 @@ php:
 env:
   - WP_VERSION=4.9
 
-services:
-  - mysql
-
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-
 cache:
   directories:
     - $HOME/.composer/cache
@@ -26,11 +18,9 @@ jobs:
     - stage: inspect
       script: ./vendor/bin/phing inspect
     - stage: test
-      script: ./vendor/bin/phing tests:coverage
+      script: ./vendor/bin/phing tests
 
 stages:
   - inspect
   - test
 
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

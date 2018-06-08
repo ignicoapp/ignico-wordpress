@@ -196,25 +196,12 @@
 	<!-- ============================================  -->
 	<target name="tests:phpunit" depends="dotenv" description="Execute tests using phpunit">
 		<echo msg="Execute tests" />
-		<exec command="./vendor/bin/phpunit --configuration phpunit.xml --coverage-html ./coverage" passthru="true" checkreturn="true" />
-	</target>
-
-	<!-- ============================================  -->
-	<!-- Target: tests:phpunit						   -->
-	<!-- ============================================  -->
-	<target name="tests:phpunit:coverage" depends="dotenv" description="Execute tests using phpunit">
-		<echo msg="Execute tests" />
-		<exec command="./vendor/bin/phpunit --configuration phpunit.xml --coverage-clover ./clover.xml" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/phpunit --configuration phpunit.xml" passthru="true" checkreturn="true" />
 	</target>
 
 	<!-- ============================================  -->
 	<!-- Target: tests                                 -->
 	<!-- ============================================  -->
 	<target name="tests" depends="dotenv, tests:phpunit" description="Execute unit tests. Execute tests:phpunit." />
-
-	<!-- ============================================  -->
-	<!-- Target: tests:coverage                           -->
-	<!-- ============================================  -->
-	<target name="tests:coverage" depends="dotenv, tests:phpunit:coverage" description="Execute unit tests. Execute tests:phpunit:coverage." />
 
 </project>
