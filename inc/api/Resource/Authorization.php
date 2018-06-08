@@ -12,10 +12,8 @@ use IgnicoWordPress\Api\Resource\Exception\AuthorizationException;
 /**
  * The class responsible for authorize and manage client with oauth2
  *
- * @package    wFirma
- * @subpackage wFirma/src
- * @author     ViewOne Sp. z o.o. <support@viewone.pl>
- * @since      1.0.0
+ * @package    IgnicoWordPress
+ * @subpackage IgnicoWordPress/api
  */
 class Authorization extends AbstractResource {
 

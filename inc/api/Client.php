@@ -11,10 +11,8 @@ use IgnicoWordPress\Api\Resource\Action;
 /**
  * The class responsible for authenticate and manage client with oauth2
  *
- * @package    wFirma
- * @subpackage wFirma/src
- * @author     ViewOne Sp. z o.o. <support@viewone.pl>
- * @since      1.0.0
+ * @package    IgnicoWordPress
+ * @subpackage IgnicoWordPress/api
  */
 class Client {
 
