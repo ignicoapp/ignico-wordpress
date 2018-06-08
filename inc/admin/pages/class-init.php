@@ -93,15 +93,7 @@ class Init {
 	 */
 	public function init_current_tab() {
 
-		$this->current_tab = $this->plugin['admin/pages/tabs']['settings'];
-
-		if (
-			! $this->plugin['admin/settings']->is_configured() ||
-			! $this->plugin['admin/settings']->is_authorized()
-
-		) {
-			$this->current_tab = $this->plugin['admin/pages/tabs']['authorization'];
-		}
+		$this->current_tab = $this->plugin['admin/pages/tabs']['authorization'];
 	}
 
 	/**
@@ -340,7 +332,6 @@ class Init {
 	 */
 	private function load_dependencies() {
 
-		$this->plugin['admin/pages/settings']      = new Settings( $this->plugin );
 		$this->plugin['admin/pages/authorization'] = new Authorization( $this->plugin );
 	}
 
@@ -353,7 +344,6 @@ class Init {
 
 		$this->load_dependencies();
 
-		$this->plugin['admin/pages/settings']->run();
 		$this->plugin['admin/pages/authorization']->run();
 
 		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_pages' );
