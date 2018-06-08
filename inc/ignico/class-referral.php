@@ -8,7 +8,7 @@
 
 namespace IgnicoWordPress\Ignico;
 
-use IgnicoWordPress\Core\Init;
+use IgnicoWordPress\Core\Init as CoreInit;
 
 /**
  * Client for WordPress calls to Ignico service.
@@ -39,7 +39,7 @@ class Referral {
 	/**
 	 * Constructor
 	 *
-	 * @param Init $plugin Ignico for WordPress plugin container.
+	 * @param CoreInit $plugin Ignico for WordPress plugin container.
 	 *
 	 * @return Referral
 	 */
