@@ -55,7 +55,7 @@ class Init_Test extends TestCase {
 		$init = new Init();
 
 		$this->mock_load_plugin_textdomain();
-		$this->mock_get_option_with_woocommerce();
+		$this->mock_get_option_with_plugins();
 
 		$init->load();
 
@@ -82,7 +82,7 @@ class Init_Test extends TestCase {
 		$init = new Init();
 
 		$this->mock_load_plugin_textdomain();
-		$this->mock_get_option_without_woocommerce();
+		$this->mock_get_option_without_plugins();
 
 		$init->load();
 
@@ -109,11 +109,26 @@ class Init_Test extends TestCase {
 		$init = new Init();
 
 		$this->mock_load_plugin_textdomain();
-		$this->mock_get_option_with_woocommerce();
+		$this->mock_get_option_with_plugins();
 
 		$init->load();
 
-		$init['loader'] = Mockery::mock( '\IgnicoWordPress\Core\Loader' )
+		$init['admin'] = Mockery::mock( '\IgnicoWordPress\Admin\Init' )
+			->shouldReceive( 'run' )
+			->once()
+			->getMock();
+
+		$init['ignico'] = Mockery::mock( '\IgnicoWordPress\Ignico\Init' )
+			->shouldReceive( 'run' )
+			->once()
+			->getMock();
+
+		$init['woocommerce'] = Mockery::mock( '\IgnicoWordPress\WooCommerce\Init' )
+			->shouldReceive( 'run' )
+			->once()
+			->getMock();
+
+		$init['edd'] = Mockery::mock( '\IgnicoWordPress\EasyDigitalDownloads\Init' )
 			->shouldReceive( 'run' )
 			->once()
 			->getMock();
@@ -123,7 +138,7 @@ class Init_Test extends TestCase {
 			->once()
 			->getMock();
 
-		$init['admin'] = Mockery::mock( '\IgnicoWordPress\Core\Admin' )
+		$init['loader'] = Mockery::mock( '\IgnicoWordPress\Core\Loader' )
 			->shouldReceive( 'run' )
 			->once()
 			->getMock();
@@ -154,7 +169,7 @@ class Init_Test extends TestCase {
 	/**
 	 * Mock get_option which is called during loading dependecies when woocommerce plugin is installed
 	 */
-	function mock_get_option_with_woocommerce() {
+	function mock_get_option_with_plugins() {
 
 		/**
 		 * Mock load_plugin_textdomain function
@@ -166,7 +181,8 @@ class Init_Test extends TestCase {
 					'active_plugins',
 				),
 				'return' => array(
-					'woocommerce/woocommerce.php'
+					'woocommerce/woocommerce.php',
+					'easy-digital-downloads/easy-digital-downloads.php'
 				)
 			)
 		);
@@ -175,7 +191,7 @@ class Init_Test extends TestCase {
 	/**
 	 * Mock get_option which is called during loading dependecies when woocommerce plugin is not installed
 	 */
-	function mock_get_option_without_woocommerce() {
+	function mock_get_option_without_plugins() {
 
 		/**
 		 * Mock load_plugin_textdomain function
