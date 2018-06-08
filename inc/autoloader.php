@@ -3,12 +3,8 @@
  * Automatically locates and loads files based on their namespaces and their
  * file names whenever they are instantiated.
  *
- * @link       http://igni.co/
- * @since      0.1.0
- *
  * @package    IgnicoWordPress
  * @subpackage IgnicoWordPress/inc
- * @author     Ignico <contact@igni.co>
  */
 
 spl_autoload_register(

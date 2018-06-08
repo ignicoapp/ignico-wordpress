@@ -5,9 +5,6 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       http://igni.co/
- * @since      0.1.0
- *
  * @package    IgnicoWordPress
  * @subpackage IgnicoWordPress/inc
  */
@@ -29,10 +26,8 @@ use IgnicoWordPress\EasyDigitalDownloads\Init as EasyDigitalDownloadsInit;
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      0.1.0
  * @package    IgnicoWordPress
  * @subpackage IgnicoWordPress/inc
- * @author     Ignico <contact@igni.co>
  */
 class Init extends Container {
 
@@ -40,8 +35,6 @@ class Init extends Container {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    0.1.0
-	 * @access   protected
 	 * @var      Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
@@ -52,8 +45,6 @@ class Init extends Container {
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
-	 *
-	 * @since    0.1.0
 	 */
 	public function __construct() {
 
@@ -113,9 +104,6 @@ class Init extends Container {
 	 *
 	 * Uses the I18n class in order to set the domain and to register the hook
 	 * with WordPress.
-	 *
-	 * @since    0.1.0
-	 * @access   private
 	 */
 	private function set_locale() {
 
@@ -129,9 +117,6 @@ class Init extends Container {
 	 * Include the following files that make up the theme:
 	 *
 	 * - Loader. Orchestrates the hooks of the theme.
-	 *
-	 * @since    0.1.0
-	 * @access   private
 	 */
 	private function load_core_dependencies() {
 
@@ -145,9 +130,6 @@ class Init extends Container {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - YourClass. What this class is doing?
-	 *
-	 * @since    0.1.0
-	 * @access   private
 	 */
 	private function load_dependencies() {
 
@@ -175,8 +157,6 @@ class Init extends Container {
 	 *
 	 * This method is public because we need it during tests without running
 	 * run method.
-	 *
-	 * @since    0.1.0
 	 */
 	public function load() {
 
@@ -192,8 +172,6 @@ class Init extends Container {
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    0.1.0
 	 */
 	public function run() {
 

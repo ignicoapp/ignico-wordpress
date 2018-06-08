@@ -7,8 +7,6 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://igni.co
- * @since             0.1.0
  * @package           IgnicoWordPress
  *
  * @wordpress-plugin

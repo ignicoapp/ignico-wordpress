@@ -3,12 +3,8 @@
  * Container class provided for keeping all plugin variables, classes in one
  * place.
  *
- * @link       http://igni.co/
- * @since      0.1.0
- *
  * @package    IgnicoWordPress
  * @subpackage IgnicoWordPress/inc
- * @author     Ignico <contact@igni.co>
  */
 
 namespace IgnicoWordPress\Core;
@@ -23,10 +19,8 @@ namespace IgnicoWordPress\Core;
  *
  * To use this class simply extend your main plugin class.
  *
- * @since      0.1.0
  * @package    IgnicoWordPress
  * @subpackage IgnicoWordPress/inc
- * @author     Ignico <contact@igni.co>
  */
 abstract class Container implements \ArrayAccess {
 
@@ -34,8 +28,6 @@ abstract class Container implements \ArrayAccess {
 	/**
 	 * Plugin container which store properties, objects, callbacks.
 	 *
-	 * @since    0.1.0
-	 * @access   protected
 	 * @var      array $container Plugin container.
 	 */
 	protected $container = array();

@@ -2,12 +2,8 @@
 /**
  * Register all actions and filters for the theme
  *
- * @link       http://igni.co/
- * @since      0.1.0
- *
  * @package    IgnicoWordPress
  * @subpackage IgnicoWordPress/inc
- * @author     Ignico <contact@igni.co>
  */
 
 namespace IgnicoWordPress\Core;
@@ -35,8 +31,6 @@ class Loader {
 	/**
 	 * The array of filters registered with WordPress.
 	 *
-	 * @since    0.1.0
-	 * @access   protected
 	 * @var      array $filters The filters registered with WordPress to fire when the theme loads.
 	 */
 	protected $filters;
