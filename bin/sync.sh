@@ -4,10 +4,10 @@
 # FILE: sync.sh
 #
 # USAGE: ./bin/sync.sh \
-#	--plugin-name="ignico-wordpress" \
+#	--plugin-name="ignico" \
 #	--git-repo="git@github.com:ignicoapp/ignico-wordpress.git" \
-#	--svn-user=user
-#	--after-git-checkout="composer install --no-dev --no-scripts"
+#	--svn-user=ignico
+#	--after-git-checkout="composer install; ./vendor/bin/phing build"
 #
 # DESCRIPTION: Sync github Ignico for WordPress repository with wordpress.org svn repository
 #
@@ -45,8 +45,8 @@ case $i in
 esac
 done
 
-readonly GIT_DIR=$(pwd)/git
-readonly GIT_ASSETS_DIR="$GIT_DIR/${ASSETS_DIR:=.wordpress.org}"
+readonly GIT_DIR=$(pwd)
+readonly GIT_ASSETS_DIR="$GIT_DIR/${ASSETS_DIR:=assets/repository}"
 readonly SVN_DIR=$(pwd)/svn
 readonly SVN_ASSETS_DIR="$SVN_DIR/assets"
 readonly SVN_TAGS_DIR="$SVN_DIR/tags"
@@ -58,16 +58,6 @@ fetch_svn_repo () {
 	echo "Fetch clean SVN repository."
 	if ! svn co "$SVN_REPO" "$SVN_DIR" > /dev/null; then
 		echo "Unable to fetch content from SVN repository at URL $SVN_REPO."
-		exit
-	fi
-	echo
-}
-
-fetch_git_repo () {
-	rm -rf "$GIT_DIR"
-	echo "Fetch clean GIT repository."
-	if ! git clone "$GIT_REPO" "$GIT_DIR"; then
-		echo "Unable to fetch content from GIT repository at URL $GIT_REPO."
 		exit
 	fi
 	echo
@@ -185,7 +175,6 @@ sync_assets () {
 }
 
 fetch_svn_repo
-fetch_git_repo
 sync_assets
 sync_all_tags
 sync_trunk

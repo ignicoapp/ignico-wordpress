@@ -33,6 +33,8 @@ class Container_Test extends TestCase {
 	 */
 	function test_saving_to_container() {
 
+		$this->mock_path_and_url_functions();
+
 		$container = new Init();
 
 		$container['key_int']    = 1;
@@ -48,6 +50,8 @@ class Container_Test extends TestCase {
 	 * Test if we can check if key exist in container
 	 */
 	function test_existence_in_container() {
+
+		$this->mock_path_and_url_functions();
 
 		$container = new Init();
 
@@ -67,6 +71,8 @@ class Container_Test extends TestCase {
 	 */
 	function test_deleting_from_container() {
 
+		$this->mock_path_and_url_functions();
+
 		$container = new Init();
 
 		$container['key_int']    = 1;
@@ -80,5 +86,31 @@ class Container_Test extends TestCase {
 		$this->assertEquals( false, isset( $container['key_int'] ) );
 		$this->assertEquals( false, isset( $container['key_string'] ) );
 		$this->assertEquals( false, isset( $container['key_object'] ) );
+	}
+
+	/**
+	 * Mock get_option which is called during loading dependecies when woocommerce plugin is not installed
+	 */
+	function mock_path_and_url_functions() {
+
+		/**
+		 * Mock plugin_dir_path function
+		 */
+		\WP_Mock::userFunction(
+			'plugin_dir_path', array(
+				'times' => 1,
+				'return' => '/var/www/wordpress-ignico/core/init'
+			)
+		);
+
+		/**
+		 * Mock plugin_dir_path function
+		 */
+		\WP_Mock::userFunction(
+			'plugin_dir_url', array(
+				'times' => 1,
+				'return' => 'http://ignico-wordpress.local/wp-content/plugins/ignico/'
+			)
+		);
 	}
 }

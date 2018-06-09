@@ -7,14 +7,27 @@ bin
 # Packages
 composer.json
 composer.lock
+package.json
+yarn.lock
+
+# Libraries
+node_modules
+
+# Assets
+assets
 
 # Configuration
 rules
+tasks
 phpunit.xml
 build.xml
 
 # Tests
 tests
 
-# Polyfill for php 7.0 is not accepted by pre-commit hook from wordpress.org svn repo
-vendor/symfony/polyfill-php70/Resources/stubs
+# Build
+build
+svn
+
+# I do not know from where this directory is getting from?
+etc

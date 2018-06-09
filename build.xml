@@ -206,25 +206,55 @@
 	<target name="tests" depends="dotenv, tests:phpunit" description="Execute unit tests. Execute tests:phpunit." />
 
 	<!-- ============================================  -->
-	<!-- Target: release                               -->
+	<!-- Target: build                                 -->
 	<!-- ============================================  -->
 	<target name="build" depends="dotenv" description="Create build with production ready plugin files.">
 
-		<echo msg="Delete previous build directory" />
-		<delete dir="build" quiet="true" />
+		<echo msg="Clean build" />
 
-		<echo msg="Clone repository" />
-		<exec command="git clone ${repository} ${project.basedir}/build/git" passthru="true" checkreturn="true" />
+		<!-- Clean vendor and node_modules -->
+		<delete dir="vendor" quiet="true" />
+		<delete dir="node_modules" quiet="true" />
+
+		<!-- Clean wordpress -->
+		<delete dir="wordpress" quiet="true" />
+
+		<!-- Clean assets -->
+		<delete dir="css" quiet="true" />
+		<delete dir="fonts" quiet="true" />
 
 		<echo msg="Install composer dependencies" />
-		<exec command="composer install --no-dev --no-scripts --working-dir=${project.basedir}/build/git" passthru="true" checkreturn="true" />
+		<exec command="composer install --no-dev --no-scripts" passthru="true" checkreturn="true" />
+
+		<echo msg="Install node dependencies" />
+		<exec command="yarn install" passthru="true" checkreturn="true" />
+
+		<echo msg="Build assets" />
+		<exec command="yarn build:prod" passthru="true" checkreturn="true" />
+
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: archives                              -->
+	<!-- ============================================  -->
+	<target name="archives" depends="build" description="Create archives with production ready plugin files.">
+
+		<echo msg="Clean archives" />
+
+		<!-- Clean build directory -->
+		<delete dir="build" quiet="true" />
+
+		<echo msg="Create required directories" />
+		<mkdir dir="${project.basedir}/build" />
+		<mkdir dir="${project.basedir}/build/dist" />
+		<mkdir dir="${project.basedir}/build/archives" />
 
 		<echo msg="Sync files with rsync excluding files from .distignore" />
-		<exec command="rsync -r --exclude-from .distignore ${project.basedir}/build/git/ ${project.basedir}/build/dist" passthru="true" checkreturn="true" />
+		<exec command="rsync -r --exclude-from .distignore ${project.basedir}/ ${project.basedir}/build/dist" passthru="true" checkreturn="true" />
 
 		<echo msg="Create archives" />
-		<exec command="tar -czf ${project.basedir}/build/${plugin}.tar.gz -C ${project.basedir}/build/dist ." passthru="true" checkreturn="true" />
-		<exec command="cd ${project.basedir}/build/dist; zip -r ${project.basedir}/build/${plugin}.zip *" passthru="true" checkreturn="true" />
+		<exec command="tar -czf ${project.basedir}/build/archives/${plugin}.tar.gz -C ${project.basedir}/build/dist ." passthru="true" checkreturn="true" />
+		<exec command="cd ${project.basedir}/build/dist; zip -r ${project.basedir}/build/archives/${plugin}.zip *" passthru="true" checkreturn="true" />
 
 	</target>
 

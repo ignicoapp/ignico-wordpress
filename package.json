@@ -1,0 +1,45 @@
+{
+  "name": "Ignico",
+  "version": "0.1.0",
+  "license": "GPL-2.0+",
+  "dependencies": {
+    "autoprefixer": "^7.1.6",
+    "babel-core": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "gulp": "4.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-iconfont": "^9.2.0",
+    "gulp-iconfont-css": "^2.1.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-rename": "^1.2.3",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "last 3 versions",
+              "safari >= 8",
+              "ie >= 11"
+            ]
+          }
+        }
+      ]
+    ]
+  },
+  "scripts": {
+    "dev": "gulp dev --require babel-register --gulpfile tasks",
+    "build:dev": "NODE_ENV=development gulp build:dev --require babel-register --gulpfile tasks",
+    "build:prod": "NODE_ENV=production gulp build:prod --require babel-register --gulpfile tasks"
+  }
+}

@@ -130,7 +130,7 @@ class Init {
 			if ( isset( $page['parent_slug'] ) && ! empty( $page['parent_slug'] ) ) {
 				add_submenu_page( $page['parent_slug'], $page['page_title'], $page['menu_title'], $page['capability'], $page['menu_slug'], $page['view'] );
 			} else {
-				add_menu_page( $page['page_title'], $page['menu_title'], $page['capability'], $page['menu_slug'], $page['view'] );
+				add_menu_page( $page['page_title'], $page['menu_title'], $page['capability'], $page['menu_slug'], $page['view'], 'dashicons-ignico' );
 			}
 		}
 	}
