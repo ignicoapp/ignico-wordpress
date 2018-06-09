@@ -35,6 +35,8 @@ class Init_Test extends TestCase {
 	 */
 	function test_init_is_settings_variables() {
 
+		$this->mock_path_and_url_functions();
+
 		$init = new Init();
 
 		$this->assertEquals( 'ignico', $init['id'] );
@@ -51,6 +53,8 @@ class Init_Test extends TestCase {
 	 * load_plugin_textdomain in other tests and we do not want break them.
 	 */
 	function test_init_is_loading_dependencies() {
+
+		$this->mock_path_and_url_functions();
 
 		$init = new Init();
 
@@ -79,6 +83,8 @@ class Init_Test extends TestCase {
 	 */
 	function test_init_is_loading_dependencies_without_woocommerce() {
 
+		$this->mock_path_and_url_functions();
+
 		$init = new Init();
 
 		$this->mock_load_plugin_textdomain();
@@ -105,6 +111,8 @@ class Init_Test extends TestCase {
 	 * load_plugin_textdomain in other tests and we do not want break them.
 	 */
 	function test_init_is_calling_run_on_dependencies() {
+
+		$this->mock_path_and_url_functions();
 
 		$init = new Init();
 
@@ -162,6 +170,32 @@ class Init_Test extends TestCase {
 					false,
 					'ignico/languages',
 				),
+			)
+		);
+	}
+
+	/**
+	 * Mock get_option which is called during loading dependecies when woocommerce plugin is not installed
+	 */
+	function mock_path_and_url_functions() {
+
+		/**
+		 * Mock plugin_dir_path function
+		 */
+		\WP_Mock::userFunction(
+			'plugin_dir_path', array(
+				'times' => 1,
+				'return' => '/var/www/wordpress-ignico/core/init'
+			)
+		);
+
+		/**
+		 * Mock plugin_dir_path function
+		 */
+		\WP_Mock::userFunction(
+			'plugin_dir_url', array(
+				'times' => 1,
+				'return' => 'http://ignico-wordpress.local/wp-content/plugins/ignico/'
 			)
 		);
 	}

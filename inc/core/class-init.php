@@ -70,6 +70,20 @@ class Init extends Container {
 		$this['version'] = '0.1.0';
 
 		/**
+		 * The plugin path.
+		 *
+		 * @var string $path The plugin path
+		 */
+		$this['path'] = realpath( plugin_dir_path( __FILE__ ) . '/../../' );
+
+		/**
+		 * The plugin url.
+		 *
+		 * @var string $url The plugin url
+		 */
+		$this['url'] = rtrim( plugin_dir_url( $this['path'] . '/ignico.php' ), '/' );
+
+		/**
 		 * Settings slug
 		 *
 		 * @var string $settings_id Settings key used in plugin

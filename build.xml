@@ -3,7 +3,7 @@
 <project name="Ignico" default="build">
 
 	<property name="plugin"  value="ignico" override="true" />
-	<property name="repository"  value="git@github.com:ignicoapp/ignico-wordpress.git" override="true" />
+	<property name="repository"  value="https://github.com/ignicoapp/ignico-wordpress" override="true" />
 
 	<!-- ============================================  -->
 	<!-- Target: dotenv                                -->
@@ -206,12 +206,18 @@
 	<target name="tests" depends="dotenv, tests:phpunit" description="Execute unit tests. Execute tests:phpunit." />
 
 	<!-- ============================================  -->
-	<!-- Target: release                               -->
+	<!-- Target: build                                 -->
 	<!-- ============================================  -->
 	<target name="build" depends="dotenv" description="Create build with production ready plugin files.">
 
-		<echo msg="Delete previous build directory" />
+		<echo msg="Clean build" />
+
+		<!-- Clean build directory -->
 		<delete dir="build" quiet="true" />
+
+		<echo msg="Create required directories" />
+		<mkdir dir="${project.basedir}/build" />
+		<mkdir dir="${project.basedir}/build/git" />
 
 		<echo msg="Clone repository" />
 		<exec command="git clone ${repository} ${project.basedir}/build/git" passthru="true" checkreturn="true" />
@@ -219,12 +225,35 @@
 		<echo msg="Install composer dependencies" />
 		<exec command="composer install --no-dev --no-scripts --working-dir=${project.basedir}/build/git" passthru="true" checkreturn="true" />
 
+		<echo msg="Install node dependencies" />
+		<exec command="cd ${project.basedir}/build/git; yarn install" passthru="true" checkreturn="true" />
+
+		<echo msg="Build assets" />
+		<exec command="cd ${project.basedir}/build/git; yarn build:prod" passthru="true" checkreturn="true" />
+
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: archive                               -->
+	<!-- ============================================  -->
+	<target name="archive" depends="build" description="Create archives with production ready plugin files.">
+
+		<echo msg="Clean archives" />
+
+		<!-- Clean build directory -->
+		<delete dir="${project.basedir}/build/dist" quiet="true" />
+		<delete dir="${project.basedir}/build/archives" quiet="true" />
+
+		<echo msg="Create required directories" />
+		<mkdir dir="${project.basedir}/build/dist" />
+		<mkdir dir="${project.basedir}/build/archives" />
+
 		<echo msg="Sync files with rsync excluding files from .distignore" />
 		<exec command="rsync -r --exclude-from .distignore ${project.basedir}/build/git/ ${project.basedir}/build/dist" passthru="true" checkreturn="true" />
 
 		<echo msg="Create archives" />
-		<exec command="tar -czf ${project.basedir}/build/${plugin}.tar.gz -C ${project.basedir}/build/dist ." passthru="true" checkreturn="true" />
-		<exec command="cd ${project.basedir}/build/dist; zip -r ${project.basedir}/build/${plugin}.zip *" passthru="true" checkreturn="true" />
+		<exec command="tar -czf ${project.basedir}/build/archives/${plugin}.tar.gz -C ${project.basedir}/build/dist ." passthru="true" checkreturn="true" />
+		<exec command="cd ${project.basedir}/build/dist; zip -r ${project.basedir}/build/archives/${plugin}.zip *" passthru="true" checkreturn="true" />
 
 	</target>
 

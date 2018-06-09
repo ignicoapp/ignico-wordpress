@@ -6,6 +6,15 @@ wordpress
 
 # Ignore vendor lib
 vendor
+node_modules
+
+# Ignore generated assets
+css
+fonts
+
+# Ignore build
+build
+svn
 
 # Reports
 coverage

@@ -48,6 +48,7 @@ class Init {
 
 		$this->plugin['admin/settings'] = new Settings( $this->plugin );
 		$this->plugin['admin/pages']    = new PagesInit( $this->plugin );
+		$this->plugin['admin/assets']   = new Assets( $this->plugin );
 	}
 
 	/**
@@ -59,5 +60,6 @@ class Init {
 
 		$this->plugin['admin/settings']->run();
 		$this->plugin['admin/pages']->run();
+		$this->plugin['admin/assets']->run();
 	}
 }
