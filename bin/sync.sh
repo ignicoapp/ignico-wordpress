@@ -4,12 +4,11 @@
 # FILE: sync.sh
 #
 # USAGE: ./bin/sync.sh \
-#	--plugin-name="ignico" \
-#	--git-repo="git@github.com:ignicoapp/ignico-wordpress.git" \
-#	--svn-user=ignico
-#	--after-git-checkout="composer install; ./vendor/bin/phing build"
+#   --plugin-name="ignico" \
+#   --svn-user=ignico
+#   --after-git-checkout="./vendor/bin/phing build"
 #
-# DESCRIPTION: Sync github Ignico for WordPress repository with wordpress.org svn repository
+# DESCRIPTION: Sync github Ignico repository with wordpress.org svn repository
 #
 #===================================================================================
 
@@ -18,40 +17,37 @@ set -eu
 for i in "$@"
 do
 case $i in
-    -p=*|--plugin-name=*)
-    readonly PLUGIN_NAME="${i#*=}"
-    shift # past argument=value
-    ;;
-    -g=*|--git-repo=*)
-    readonly GIT_REPO="${i#*=}"
-    shift # past argument=value
-    ;;
-    -u=*|--svn-user=*)
-    readonly SVN_USER="${i#*=}"
-    shift # past argument=value
-    ;;
-    -a=*|--assets-dir=*)
-    readonly ASSETS_DIR="${i#*=}"
-    shift # past argument=value
-    ;;
-    -agc=*|--after-git-checkout=*)
-    readonly AFTER_GIT_CHECKOUT="${i#*=}"
-    shift # past argument=value
-    ;;
-    *)
+	-p=*|--plugin-name=*)
+	readonly PLUGIN_NAME="${i#*=}"
+	shift # past argument=value
+	;;
+	-u=*|--svn-user=*)
+	readonly SVN_USER="${i#*=}"
+	shift # past argument=value
+	;;
+	-a=*|--assets-dir=*)
+	readonly ASSETS_DIR="${i#*=}"
+	shift # past argument=value
+	;;
+	-agc=*|--after-git-checkout=*)
+	readonly AFTER_GIT_CHECKOUT="${i#*=}"
+	shift # past argument=value
+	;;
+	*)
 		echo "Unknown option '${i#*=}', aborting..."
 		exit
-    ;;
+	;;
 esac
 done
 
-readonly GIT_DIR=$(pwd)
+readonly ROOT_DIR=$(pwd)
+readonly GIT_DIR=$ROOT_DIR/build/git
 readonly GIT_ASSETS_DIR="$GIT_DIR/${ASSETS_DIR:=assets/repository}"
-readonly SVN_DIR=$(pwd)/svn
-readonly SVN_ASSETS_DIR="$SVN_DIR/assets"
+readonly SVN_REPO="https://plugins.svn.wordpress.org/$PLUGIN_NAME"
+readonly SVN_DIR=$ROOT_DIR/build/svn
 readonly SVN_TAGS_DIR="$SVN_DIR/tags"
 readonly SVN_TRUNK_DIR="$SVN_DIR/trunk"
-readonly SVN_REPO="https://plugins.svn.wordpress.org/$PLUGIN_NAME"
+readonly SVN_ASSETS_DIR="$SVN_DIR/assets"
 
 fetch_svn_repo () {
 	rm -rf "$SVN_DIR"
@@ -66,28 +62,28 @@ fetch_svn_repo () {
 stage_and_commit_changes () {
 	local message=$1
 
-  svn add --force --quiet .
+	svn add --force --quiet .
 
-  if [ -d "$ASSETS_DIR" ]; then
-    svn del --force --quiet "$ASSETS_DIR"
-  fi
+	if [ -d "$ASSETS_DIR" ]; then
+		svn del --force --quiet "$ASSETS_DIR"
+	fi
 
-  find . -type f -name "*.png" \
-    | awk '{print $0 "@"}' \
-    | xargs svn propset --quiet --force svn:mime-type image/png
+	find . -type f -name "*.png" \
+		| awk '{print $0 "@"}' \
+		| xargs svn propset --quiet --force svn:mime-type image/png
 
-  find . -type f -name "*.jpg" \
-    | awk '{print $0 "@"}' \
-    | xargs svn propset --quiet --force svn:mime-type image/jpeg
+	find . -type f -name "*.jpg" \
+		| awk '{print $0 "@"}' \
+		| xargs svn propset --quiet --force svn:mime-type image/jpeg
 
-  # Untrack files that have been deleted.
-  # We add an at symbol to every name.
-  # See http://stackoverflow.com/questions/1985203/why-subversion-skips-files-which-contain-the-symbol#1985366
-  svn status \
-    | grep -v "^[ \t]*\..*" \
-    | grep "^\!" \
-    | awk '{print $2 "@"}' \
-    | xargs svn del --force --quiet
+	# Untrack files that have been deleted.
+	# We add an at symbol to every name.
+	# See http://stackoverflow.com/questions/1985203/why-subversion-skips-files-which-contain-the-symbol#1985366
+	svn status \
+		| grep -v "^[ \t]*\..*" \
+		| grep "^\!" \
+		| awk '{print $2 "@"}' \
+		| xargs svn del --force --quiet
 
 	changes=$(svn status -q)
 	if [[ $changes ]]; then
@@ -100,15 +96,15 @@ stage_and_commit_changes () {
 }
 
 sync_files () {
-  local source=$1/
-  local destination=$2/
-  local excludeFrom="$source.distignore"
+	local source=$1/
+	local destination=$2/
+	local excludeFrom="$source.distignore"
 
-  if [ -f "$excludeFrom" ]; then
-    rsync --compress --recursive --delete --delete-excluded --force --archive --exclude-from "$excludeFrom" "$source" "$destination"
-  else
-    rsync --compress --recursive --delete --delete-excluded --force --archive "$source" "$destination"
-  fi
+	if [ -f "$excludeFrom" ]; then
+		rsync --compress --recursive --delete --delete-excluded --force --archive --exclude-from "$excludeFrom" "$source" "$destination"
+	else
+		rsync --compress --recursive --delete --delete-excluded --force --archive "$source" "$destination"
+	fi
 }
 
 sync_tag () {
@@ -125,12 +121,14 @@ sync_tag () {
 	git checkout "tags/$tag" > /dev/null 2>&1
 
 	if [ ! -z ${AFTER_GIT_CHECKOUT+x} ]; then
+		cd "$ROOT_DIR" || exit
+
 		eval $AFTER_GIT_CHECKOUT;
 	fi
 
 	echo "Copying files over to svn repository in folder $SVN_DIR/tags/$tag."
 	mkdir "$SVN_DIR/tags/$tag"
-  sync_files . "$SVN_DIR/tags/$tag"
+	sync_files $GIT_DIR "$SVN_DIR/tags/$tag"
 
 	cd "$SVN_DIR/tags/$tag" || exit
 	stage_and_commit_changes "Release tag $tag"
@@ -151,6 +149,8 @@ sync_trunk () {
 	git checkout master > /dev/null 2>&1
 
 	if [ ! -z ${AFTER_GIT_CHECKOUT+x} ]; then
+		cd "$ROOT_DIR" || exit
+
 		eval $AFTER_GIT_CHECKOUT;
 	fi
 

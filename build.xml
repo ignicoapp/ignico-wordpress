@@ -206,21 +206,39 @@
 	<target name="tests" depends="dotenv, tests:phpunit" description="Execute unit tests. Execute tests:phpunit." />
 
 	<!-- ============================================  -->
-	<!-- Target: build                                 -->
+	<!-- Target: build:clean                           -->
 	<!-- ============================================  -->
-	<target name="build" depends="dotenv" description="Create build with production ready plugin files.">
+	<target name="build:clean" description="Clean build directories.">
 
 		<echo msg="Clean build" />
 
 		<!-- Clean build directory -->
-		<delete dir="build" quiet="true" />
+		<delete dir="${project.basedir}/build/git" quiet="true" />
+		<delete dir="${project.basedir}/build/svn" quiet="true" />
+		<delete dir="${project.basedir}/build/dist" quiet="true" />
+		<delete dir="${project.basedir}/build/archives" quiet="true" />
+
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: build:clone                           -->
+	<!-- ============================================  -->
+	<target name="build:clone" description="Clone repository to seperate directory.">
 
 		<echo msg="Create required directories" />
+
 		<mkdir dir="${project.basedir}/build" />
 		<mkdir dir="${project.basedir}/build/git" />
 
 		<echo msg="Clone repository" />
 		<exec command="git clone ${repository} ${project.basedir}/build/git" passthru="true" checkreturn="true" />
+
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: build                                 -->
+	<!-- ============================================  -->
+	<target name="build:install" description="Install project dependencies.">
 
 		<echo msg="Install composer dependencies" />
 		<exec command="composer install --no-dev --no-scripts --working-dir=${project.basedir}/build/git" passthru="true" checkreturn="true" />
@@ -228,23 +246,25 @@
 		<echo msg="Install node dependencies" />
 		<exec command="cd ${project.basedir}/build/git; yarn install" passthru="true" checkreturn="true" />
 
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: build:assets                          -->
+	<!-- ============================================  -->
+	<target name="build:assets" description="Build projects assets.">
+
 		<echo msg="Build assets" />
 		<exec command="cd ${project.basedir}/build/git; yarn build:prod" passthru="true" checkreturn="true" />
 
 	</target>
 
 	<!-- ============================================  -->
-	<!-- Target: archive                               -->
+	<!-- Target: build:archive                         -->
 	<!-- ============================================  -->
-	<target name="archive" depends="build" description="Create archives with production ready plugin files.">
-
-		<echo msg="Clean archives" />
-
-		<!-- Clean build directory -->
-		<delete dir="${project.basedir}/build/dist" quiet="true" />
-		<delete dir="${project.basedir}/build/archives" quiet="true" />
+	<target name="build:archive" depends="dotenv" description="Create archives with production ready plugin files.">
 
 		<echo msg="Create required directories" />
+
 		<mkdir dir="${project.basedir}/build/dist" />
 		<mkdir dir="${project.basedir}/build/archives" />
 
@@ -255,6 +275,32 @@
 		<exec command="tar -czf ${project.basedir}/build/archives/${plugin}.tar.gz -C ${project.basedir}/build/dist ." passthru="true" checkreturn="true" />
 		<exec command="cd ${project.basedir}/build/dist; zip -r ${project.basedir}/build/archives/${plugin}.zip *" passthru="true" checkreturn="true" />
 
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: build                                 -->
+	<!-- ============================================  -->
+	<target name="build" description="Build plugin and create archive. Execute build:clean, build:clone, build:install, build:assets, build:archive.">
+
+		<echo msg="Full build" />
+
+		<phingcall target="build:clean" />
+		<phingcall target="build:clone" />
+		<phingcall target="build:install" />
+		<phingcall target="build:assets" />
+		<phingcall target="build:archive" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: deploy:wp                             -->
+	<!-- ============================================  -->
+	<target name="deploy:wp" description="Synchronize git repository with WordPress plugin svn repository.">
+
+		<echo msg="Synchronize git repository with WordPress plugin svn repository" />
+
+		<phingcall target="build:clean" />
+		<phingcall target="build:clone" />
+		<exec command="./bin/sync.sh --plugin-name=ignico --svn-user=ignico --after-git-checkout='./vendor/bin/phing build:install build:assets'" passthru="true" checkreturn="true" />
 	</target>
 
 </project>
