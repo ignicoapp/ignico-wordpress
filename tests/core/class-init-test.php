@@ -40,7 +40,7 @@ class Init_Test extends TestCase {
 		$init = new Init();
 
 		$this->assertEquals( 'ignico', $init['id'] );
-		$this->assertEquals( 'Ignico for WordPress', $init['name'] );
+		$this->assertEquals( 'Ignico', $init['name'] );
 		$this->assertEquals( '0.1.0', $init['version'] );
 	}
 

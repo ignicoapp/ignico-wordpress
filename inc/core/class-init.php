@@ -60,7 +60,7 @@ class Init extends Container {
 		 *
 		 * @var      string $name The string used to display theme name.
 		 */
-		$this['name'] = 'Ignico for WordPress';
+		$this['name'] = 'Ignico';
 
 		/**
 		 * The current version of the plugin.
@@ -95,14 +95,14 @@ class Init extends Container {
 		 *
 		 * @var string $notification_setup
 		 */
-		$this['notification/setup'] = __( 'Ignico for WordPress plugin require configuration to work properly. Please provide your Workspace, Client ID and Client Secret in Authorization tab to authorize plugin.', 'ignico' );
+		$this['notification/setup'] = __( 'Ignico plugin require configuration to work properly. Please provide your Workspace, Client ID and Client Secret in Authorization tab to authorize plugin.', 'ignico' );
 
 		/**
 		 * Notification to setup Ignico before go to settigns
 		 *
 		 * @var string $notification_lock
 		 */
-		$this['notification/lock'] = __( 'Before setting up Ignico for WordPress authorize plugin to Ignico service.', 'ignico' );
+		$this['notification/lock'] = __( 'Before setting up Ignico authorize plugin to Ignico service.', 'ignico' );
 
 		/**
 		 * Notification informing user that authentication for some reason failed

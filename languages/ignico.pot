@@ -11,5 +11,5 @@
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en_US\n"
 
-msgid "Ignico for WordPress is plugin provided to integrate Ignico - Rewards & Commission Automation service with popular WordPress e-commerce systems WooCommerce and Easy Digital Downloads."
+msgid "Ignico is plugin provided to integrate Ignico - Rewards & Commission Automation service with popular WordPress e-commerce systems WooCommerce and Easy Digital Downloads."
 msgstr ""

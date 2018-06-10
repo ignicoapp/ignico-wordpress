@@ -11,5 +11,5 @@
 "%100<10 || n%100>=20) ? 1 : 2);\n"
 "Language: pl\n"
 
-msgid "Ignico for WordPress is plugin provided to integrate Ignico - Rewards & Commission Automation service with popular WordPress e-commerce systems WooCommerce and Easy Digital Downloads."
-msgstr "Ignico for WordPress jest wtyczką stworzony do integracji serwisu Ignico - Rewards & Commission Automation z popularnymi systemami e-commerce dla WordPress WooCommerce i Easy Digital Downloads."
+msgid "Ignico is plugin provided to integrate Ignico - Rewards & Commission Automation service with popular WordPress e-commerce systems WooCommerce and Easy Digital Downloads."
+msgstr "Ignico jest wtyczką stworzony do integracji serwisu Ignico - Rewards & Commission Automation z popularnymi systemami e-commerce dla WordPress WooCommerce i Easy Digital Downloads."

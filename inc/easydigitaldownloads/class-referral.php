@@ -21,14 +21,14 @@ class Referral {
 	/**
 	 * Plugin container.
 	 *
-	 * @var Init $plugin Ignico for WordPress plugin container
+	 * @var Init $plugin Ignico plugin container
 	 */
 	private $plugin;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @param CoreInit $plugin Ignico for WordPress plugin container.
+	 * @param CoreInit $plugin Ignico plugin container.
 	 *
 	 * @return Referral
 	 */

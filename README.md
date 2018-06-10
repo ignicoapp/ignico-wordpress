@@ -6,11 +6,11 @@
 
 Ignico is **rewards & commission automation engine** that helps businesses create their referral, loyalty, MLM, gamification or social selling program on the top of existing e-commerce platforms or CRM's [(read more about Ignico)](http://igni.co/).
 
-Ignico for WordPress is a plugin that is built to seamlessly integrate Ignico with [WooCommerce](https://woocommerce.com/) or [Easy Digital Downloads](https://easydigitaldownloads.com/) (WordPress extensions).
+Ignico is a plugin that is built to seamlessly integrate Ignico with [WooCommerce](https://woocommerce.com/) or [Easy Digital Downloads](https://easydigitaldownloads.com/) (WordPress extensions).
 
 ## How it works?
 
-Ignico for WordPress automatically:
+Ignico automatically:
 
 * Loads cookie to the user upon entrance and saves there Referral Code from the URL (comes from affiliate link sent before by one of the brand ambassadors),
 * Sends API call with the transaction to Ignico once order in e-commerce platform (based on WooCommerce or Easy Digital Download) is paid. The transaction value equals the amount of the order.
@@ -19,7 +19,7 @@ Based on these transactions, Ignico calculates rewards for brand ambassadors bas
 
 ## Use cases
 
-With Ignico for WordPress you can build:
+With Ignico you can build:
 
 * Referral Program
 * Affiliate Program
@@ -33,8 +33,8 @@ Powerful as it may seem, Ignico is a truly all-in-one **Growth Hacking Platform*
 
 ## Installation :package:
 1. Visit Plugins > Add New
-2. Search for "Ignico for WordPress"
-3. Install and activate "Ignico for WordPress"
+2. Search for "Ignico"
+3. Install and activate "Ignico"
 
 or
 

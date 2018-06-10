@@ -39,7 +39,7 @@ class Referral {
 	/**
 	 * Constructor
 	 *
-	 * @param CoreInit $plugin Ignico for WordPress plugin container.
+	 * @param CoreInit $plugin Ignico plugin container.
 	 *
 	 * @return Referral
 	 */

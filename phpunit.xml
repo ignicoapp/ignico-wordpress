@@ -18,7 +18,7 @@
 
 	<!-- Define test suite to tell phpunit which file to test without giving directory name as cli argument. -->
 	<testsuites>
-		<testsuite name="Ignico for WordPress test suite">
+		<testsuite name="Ignico test suite">
 			<directory suffix="-test.php">./tests</directory>
 		</testsuite>
 	</testsuites>

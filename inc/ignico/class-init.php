@@ -21,14 +21,14 @@ class Init {
 	/**
 	 * Plugin container.
 	 *
-	 * @var CoreInit $plugin Ignico for WordPress Plugin container
+	 * @var CoreInit $plugin Ignico Plugin container
 	 */
 	private $plugin;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @param object $plugin Ignico for WordPress Plugin container.
+	 * @param object $plugin Ignico Plugin container.
 	 *
 	 * @return Init
 	 */

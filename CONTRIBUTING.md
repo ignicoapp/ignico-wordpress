@@ -1,5 +1,5 @@
 # Contribution guide
-I’m really excited that you are interested in contributing to Ignico for WordPress. Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
+I’m really excited that you are interested in contributing to Ignico. Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
 
 ## Development setup
 
