@@ -99,8 +99,12 @@ class Client {
 
 		update_option( 'ignico_access_token', $access_token );
 
-		$this->plugin['settings']['access_token'] = $access_token;
 		$this->client->authorization()->setAccessToken( $access_token );
+
+		$settings                 = $this->plugin['settings'];
+		$settings['access_token'] = $access_token;
+
+		$this->plugin['settings'] = $settings;
 	}
 
 	/**

@@ -97,6 +97,12 @@ class Authorization {
 			 */
 			$this->plugin['ignico/client']->authorize();
 
+			/**
+			 * If authorization would not throw exception we can show successful
+			 * notification.
+			 */
+			$this->plugin['notice']->add_flash_notice( $this->plugin['notification/authorization_successful'], Notice::SUCCESS );
+
 		} catch ( AuthorizationException $e ) {
 
 			$message = $e->getMessage();
