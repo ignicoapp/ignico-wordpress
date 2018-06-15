@@ -134,13 +134,97 @@ class Authorization {
 		$old_data = $this->plugin['admin/settings']->get_settings();
 		$data     = array_merge( $old_data, $data );
 
-		$data['workspace']     = trim( filter_var( $data['workspace'], FILTER_SANITIZE_STRING ) );
+		/**
+		 * Sanitize and trim all data passed to form.
+		 *
+		 * We allow passing workspace with capital letters but we will convert
+		 * to lowercase to normalize it.
+		 */
+		$data['workspace']     = strtolower( trim( filter_var( $data['workspace'], FILTER_SANITIZE_STRING ) ) );
 		$data['client_id']     = trim( filter_var( $data['client_id'], FILTER_SANITIZE_STRING ) );
 		$data['client_secret'] = trim( filter_var( $data['client_secret'], FILTER_SANITIZE_STRING ) );
 
-		$data = $this->post_controller( $data );
+		/**
+		 * If data is not valid prevent from executing post controller which
+		 * will try to authenticate user and show validation messages.
+		 *
+		 * Data is passed as reference can be modified in is_valid method.
+		 */
+
+		if ( $this->is_valid( $data ) ) {
+			$data = $this->post_controller( $data );
+		}
 
 		return $data;
+	}
+
+	/**
+	 * Check if provided data are valid
+	 *
+	 * Pass data as reference to modify it without returning value.
+	 *
+	 * @param array $data Sanitized form data.
+	 *
+	 * @return boolean
+	 */
+	public function is_valid( &$data ) {
+
+		$old_data = $this->plugin['admin/settings']->get_settings();
+
+		$valid = true;
+
+		$workspace_exist     = isset( $data['workspace'] ) && ! empty( $data['workspace'] );
+		$client_id_exist     = isset( $data['client_id'] ) && ! empty( $data['client_id'] );
+		$client_secret_exist = isset( $data['client_secret'] ) && ! empty( $data['client_secret'] );
+
+		/**
+		 * Validate workspace existence
+		 */
+		if ( ! $workspace_exist ) {
+
+			$valid             = false;
+			$data['workspace'] = $old_data['workspace'];
+
+			$this->plugin['notice']->add_flash_notice( sprintf( $this->plugin['notification/form/field/required'], esc_html( __( 'Workspace', 'ignico' ) ) ), Notice::ERROR );
+		}
+
+		/**
+		 * Validate workspace proper format
+		 *
+		 * Workspace is part of igni.co subdomain e.g test.igni.co. Test prefix
+		 * must be validated as part of the domain.
+		 */
+		if ( $workspace_exist && ! preg_match( '/^[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?$/i', $data['workspace'] ) ) {
+
+			$valid             = false;
+			$data['workspace'] = $old_data['workspace'];
+
+			$this->plugin['notice']->add_flash_notice( $this->plugin['notification/form/field/workspace'], Notice::ERROR );
+		}
+
+		/**
+		 * Validate client id existence
+		 */
+		if ( ! $client_id_exist ) {
+
+			$valid             = false;
+			$data['client_id'] = $old_data['client_id'];
+
+			$this->plugin['notice']->add_flash_notice( sprintf( $this->plugin['notification/form/field/required'], esc_html( __( 'Client ID', 'ignico' ) ) ), Notice::ERROR );
+		}
+
+		/**
+		 * Validate client secret existence
+		 */
+		if ( ! $client_secret_exist ) {
+
+			$valid                 = false;
+			$data['client_secret'] = $old_data['client_secret'];
+
+			$this->plugin['notice']->add_flash_notice( sprintf( $this->plugin['notification/form/field/required'], esc_html( __( 'Client secret', 'ignico' ) ) ), Notice::ERROR );
+		}
+
+		return $valid;
 	}
 
 	/**
