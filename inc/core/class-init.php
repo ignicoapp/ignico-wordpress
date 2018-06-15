@@ -105,11 +105,18 @@ class Init extends Container {
 		$this['notification/lock'] = __( 'Before setting up Ignico authorize plugin to Ignico service.', 'ignico' );
 
 		/**
-		 * Notification informing user that authentication for some reason failed
+		 * Notification informing user that authorization for some reason failed
 		 *
 		 * @var string $notification_authentication_failed
 		 */
 		$this['notification/authorization_failed'] = __( 'Authorization failed. Check if you provide correct Workspace, Client ID and Client Secret.', 'ignico' );
+
+		/**
+		 * Notification informing user about successful authorization.
+		 *
+		 * @var string $notification_authentication_failed
+		 */
+		$this['notification/authorization_successful'] = __( 'Authorization was successful.', 'ignico' );
 
 		/**
 		 * Notification informing user that provided field is required
