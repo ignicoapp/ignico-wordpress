@@ -118,6 +118,21 @@ class Init extends Container {
 		 */
 		$this['notification/authorization_successful'] = __( 'Authorization was successful.', 'ignico' );
 
+		/**
+		 * Notification informing user that provided field is required
+		 *
+		 * @var string $notification_form_field_required
+		 */
+		/* Translators: %s is administration form field name */
+		$this['notification/form/field/required'] = __( '"%s" field is required and cannot be empty.', 'ignico' );
+
+		/**
+		 * Notification informing user that provided workspace is not valid
+		 *
+		 * @var string $notification_form_field_workspace
+		 */
+		$this['notification/form/field/workspace'] = __( 'Provided value is not valid workspace name. Allowed characters are letters, numbers and hyphens.', 'ignico' );
+
 	}
 
 	/**
