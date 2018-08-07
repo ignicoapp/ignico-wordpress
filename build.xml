@@ -157,11 +157,29 @@
 	</target>
 
 	<!-- ============================================  -->
-	<!-- Target: phpcs                                 -->
+	<!-- Target: inspect:phpcs:wp                      -->
+	<!-- ============================================  -->
+	<target name="inspect:phpcs:wp" description="Check posible code styling errors against WordPress rules in php files using phpcs comamnd." depends="setup:symlink">
+		<echo msg="Check posible code styling errors against WordPress rules" />
+		<exec command="./vendor/bin/phpcs  --extensions=php --standard=./rules/phpcs-wordpress.xml" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: inspect:phpcs:php56                   -->
+	<!-- ============================================  -->
+	<target name="inspect:phpcs:php56" description="Check posible code styling errors against PHP 5.6 compability in php files using phpcs comamnd." depends="setup:symlink">
+		<echo msg="Check posible code styling errors against against PHP 5.6 compability" />
+		<exec command="./vendor/bin/phpcs  --extensions=php --standard=./rules/phpcs-php56.xml" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: inspect:phpcs                         -->
 	<!-- ============================================  -->
 	<target name="inspect:phpcs" description="Check posible code styling errors in php files using phpcs comamnd." depends="setup:symlink">
 		<echo msg="Check posible code styling errors" />
-		<exec command="./vendor/bin/phpcs  --extensions=php --ignore=${project.basedir}/vendor,${project.basedir}/wordpress --standard=./rules/phpcs.xml" passthru="true" checkreturn="true" />
+
+		<phingcall target="inspect:phpcs:wp" />
+		<phingcall target="inspect:phpcs:php56" />
 	</target>
 
 	<!-- ============================================  -->
