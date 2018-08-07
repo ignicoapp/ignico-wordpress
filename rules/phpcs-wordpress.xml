@@ -1,0 +1,17 @@
+<ruleset name="WordPress">
+
+	<config name="installed_paths" value="vendor/wp-coding-standards/wpcs" />
+
+	<description>WordPress</description>
+
+	<file>./../inc/admin</file>
+	<file>./../inc/core</file>
+	<file>./../inc/ignico</file>
+	<file>./../inc/woocommerce</file>
+
+	<!-- Run against the WordPress ruleset -->
+	<rule ref="WordPress" />
+
+	<exclude-pattern>index.php</exclude-pattern>
+
+</ruleset>

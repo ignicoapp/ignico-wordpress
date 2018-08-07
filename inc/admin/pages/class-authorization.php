@@ -8,8 +8,8 @@
 
 namespace IgnicoWordPress\Admin\Pages;
 
-use IgnicoWordPress\Api\Resource\Authorization\AccessToken;
-use IgnicoWordPress\Api\Resource\Exception\AuthorizationException;
+use IgnicoWordPress\Api\Res\Authorization\AccessToken;
+use IgnicoWordPress\Api\Res\Exception\AuthorizationException;
 
 use IgnicoWordPress\Core\Notice;
 

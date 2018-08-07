@@ -1,0 +1,18 @@
+<ruleset name="PHP 5.6">
+
+	<config name="installed_paths" value="vendor/wimg/php-compatibility" />
+
+	<description>PHP 5.6</description>
+
+	<!-- Check PHPCompatibility rules for cross-version support for PHP 5.6 and higher. -->
+	<config name="testVersion" value="5.6-"/>
+
+	<!-- Run against the PHPCompatibility ruleset -->
+	<rule ref="PHPCompatibility"/>
+
+	<file>./../inc</file>
+	<file>./../ignico.php</file>
+
+	<exclude-pattern>index.php</exclude-pattern>
+
+</ruleset>

@@ -16,5 +16,5 @@ abstract class ClientException extends \Exception implements ClientExceptionInte
 	 *
 	 * @return RequestInterface
 	 */
-	public function getRequest(): RequestInterface {}
+	public function getRequest() {}
 }
