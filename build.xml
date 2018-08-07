@@ -294,6 +294,16 @@
 	<!-- ============================================  -->
 	<!-- Target: deploy:wp                             -->
 	<!-- ============================================  -->
+	<target name="changelog" description="Generate changelog based on commits.">
+
+		<echo msg="Generate changelog based on commits." />
+
+		<exec command="./node_modules/.bin/conventional-changelog -p jquery -i CHANGELOG.md -s -r 0" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: deploy:wp                             -->
+	<!-- ============================================  -->
 	<target name="deploy:wp" description="Synchronize git repository with WordPress plugin svn repository.">
 
 		<echo msg="Synchronize git repository with WordPress plugin svn repository" />
