@@ -9,7 +9,7 @@
 namespace IgnicoWordPress\Ignico;
 
 use IgnicoWordPress\Api\Client as ApiClient;
-use IgnicoWordPress\Api\Resource\Authorization\AccessToken;
+use IgnicoWordPress\Api\Res\Authorization\AccessToken;
 
 /**
  * Client for WordPress calls to Ignico service.

@@ -1,13 +1,13 @@
 <?php
 
-namespace IgnicoWordPress\Api\Resource;
+namespace IgnicoWordPress\Api\Res;
 
 use IgnicoWordPress\Api\Http\ClientInterface;
 
-use IgnicoWordPress\Api\AbstractResource;
-use IgnicoWordPress\Api\Resource\Authorization\AccessToken;
+use IgnicoWordPress\Api\AbstractRes;
+use IgnicoWordPress\Api\Res\Authorization\AccessToken;
 
-use IgnicoWordPress\Api\Resource\Exception\AuthorizationException;
+use IgnicoWordPress\Api\Res\Exception\AuthorizationException;
 
 /**
  * The class responsible for authorize and manage client with oauth2
@@ -15,7 +15,7 @@ use IgnicoWordPress\Api\Resource\Exception\AuthorizationException;
  * @package    IgnicoWordPress
  * @subpackage IgnicoWordPress/api
  */
-class Authorization extends AbstractResource {
+class Authorization extends AbstractRes {
 
 	/**
 	 * Authorization grand type

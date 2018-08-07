@@ -1,6 +1,6 @@
 <?php
 
-namespace IgnicoWordPress\Api\Resource\Exception;
+namespace IgnicoWordPress\Api\Res\Exception;
 
 /**
  * Throws when authorization failed and we know why e.g. we have message to show

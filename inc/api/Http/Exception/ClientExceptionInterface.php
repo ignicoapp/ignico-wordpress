@@ -16,5 +16,5 @@ interface ClientExceptionInterface extends \Throwable {
 	 *
 	 * @return RequestInterface
 	 */
-	public function getRequest(): RequestInterface;
+	public function getRequest();
 }

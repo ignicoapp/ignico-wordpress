@@ -5,8 +5,8 @@ namespace IgnicoWordPress\Api;
 use IgnicoWordPress\Api\Http\ClientInterface;
 use IgnicoWordPress\Api\Http\Client as HttpClient;
 
-use IgnicoWordPress\Api\Resource\Authorization;
-use IgnicoWordPress\Api\Resource\Action;
+use IgnicoWordPress\Api\Res\Authorization;
+use IgnicoWordPress\Api\Res\Action;
 
 /**
  * The class responsible for authenticate and manage client with oauth2

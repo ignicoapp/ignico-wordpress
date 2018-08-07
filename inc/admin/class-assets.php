@@ -8,7 +8,7 @@
 
 namespace IgnicoWordPress\Admin;
 
-use IgnicoWordPress\Api\Resource\Authorization\AccessToken;
+use IgnicoWordPress\Api\Res\Authorization\AccessToken;
 
 /**
  * Class provided for manage admin assets
