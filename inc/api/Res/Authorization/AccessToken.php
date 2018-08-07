@@ -1,6 +1,6 @@
 <?php
 
-namespace IgnicoWordPress\Api\Resource\Authorization;
+namespace IgnicoWordPress\Api\Res\Authorization;
 
 /**
  * The class responsible for wrapping response with access token.

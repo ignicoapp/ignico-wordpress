@@ -14,7 +14,7 @@ use IgnicoWordPress\Api\Http\Message\Uri;
  *
  * @package IgnicoWordPress\Api
  */
-abstract class AbstractResource {
+abstract class AbstractApiResource {
 
 	/**
 	 * Form media type

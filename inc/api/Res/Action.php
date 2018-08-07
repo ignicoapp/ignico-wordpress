@@ -1,8 +1,8 @@
 <?php
 
-namespace IgnicoWordPress\Api\Resource;
+namespace IgnicoWordPress\Api\Res;
 
-use IgnicoWordPress\Api\AbstractResource;
+use IgnicoWordPress\Api\AbstractApiResource;
 
 /**
  * Contractor module
@@ -10,7 +10,7 @@ use IgnicoWordPress\Api\AbstractResource;
  * @package    IgnicoWordPress
  * @subpackage IgnicoWordPress/api/Resource
  */
-class Action extends AbstractResource {
+class Action extends AbstractRes {
 
 	/**
 	 * Action add endpoint
