@@ -8,6 +8,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
+    "conventional-changelog-cli": "^2.0.1",
     "gulp": "4.0.0",
     "gulp-clean": "^0.4.0",
     "gulp-iconfont": "^9.2.0",
