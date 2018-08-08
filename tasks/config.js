@@ -7,7 +7,6 @@
  * console.log(config.src);
  */
 import gulp from 'gulp';
-import notify from 'gulp-notify';
 
 /**
  * Base variables

@@ -4,7 +4,6 @@
 import config from './config';
 
 import gulp from 'gulp';
-import notify from 'gulp-notify';
 import clean from 'gulp-clean';
 import rename from 'gulp-rename';
 import sass from 'gulp-sass';
@@ -82,21 +81,13 @@ gulp.task('stylesheet:iconfont', function() {
 
 });
 
-gulp.task('stylesheet:notify', function() {
-
-    return gulp.src(config.distCssPath)
-        .pipe(notify('Stylesheet tasks completed!', { onLast: true }));
-
-});
-
 /**
  * Task provided for processing scss files for development purpose
  */
 gulp.task('stylesheet:development', gulp.series([
 	'stylesheet:iconfont',
     'stylesheet:compile:development',
-	'stylesheet:compile:production',
-    'stylesheet:notify'
+	'stylesheet:compile:production'
 ]));
 
 /**
@@ -105,8 +96,7 @@ gulp.task('stylesheet:development', gulp.series([
 gulp.task('stylesheet:production', gulp.series([
 	'stylesheet:iconfont',
 	'stylesheet:compile:development',
-    'stylesheet:compile:production',
-    'stylesheet:notify'
+    'stylesheet:compile:production'
 ]));
 
 /**
