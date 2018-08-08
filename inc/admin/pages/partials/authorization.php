@@ -33,7 +33,8 @@
 			<tr valign="top">
 				<th scope="row"><?php esc_html_e( 'Workspace:', 'ignico' ); ?></th>
 				<td>
-					<input type="text" name="ignico_settings[workspace]" value="<?php echo esc_attr( $settings['workspace'] ); ?>" class="regular-text" />
+					<input type="text" name="ignico_settings[workspace]" value="<?php echo esc_attr( $settings['workspace'] ); ?>" />
+					<span>.igni.co</span>
 					<p class="description"><?php esc_html_e( 'Your workspace name would be used to build your API custom  url https://{{workspace}}.igni.co', 'ignico' ); ?></p>
 				</td>
 			</tr>
