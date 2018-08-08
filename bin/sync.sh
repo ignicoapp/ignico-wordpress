@@ -155,7 +155,7 @@ sync_trunk () {
 	fi
 
 	echo "Copying files over to svn repository in folder $SVN_TRUNK_DIR."
-	sync_files . "$SVN_TRUNK_DIR"
+	sync_files "$GIT_DIR" "$SVN_TRUNK_DIR"
 
 	cd "$SVN_TRUNK_DIR" || exit
 	stage_and_commit_changes "Updating trunk"
