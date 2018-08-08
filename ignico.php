@@ -12,7 +12,7 @@
  * @wordpress-plugin
  * Plugin Name:       Ignico
  * Description:       Ignico is rewards & commission automation engine that helps businesses create their referral, loyalty, MLM, gamification or social selling program on the top of existing e-commerce platforms or CRM's.
- * Version:           0.1.0
+ * Version:           0.2.0
  * Author:            Ignico Sp. z o.o.
  * Author URI:        http://igni.co
  * License:           GPL-2.0+

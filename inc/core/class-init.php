@@ -67,7 +67,7 @@ class Init extends Container {
 		 *
 		 * @var      string    $version    The current version of the plugin.
 		 */
-		$this['version'] = '0.1.0';
+		$this['version'] = '0.2.0';
 
 		/**
 		 * The plugin path.

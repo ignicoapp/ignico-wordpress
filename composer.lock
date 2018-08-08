@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "efe77aed080b4103bc59a0d4ebbcee6a",
+    "content-hash": "c43114f52d908cf9d893bdd11b59bfcd",
     "packages": [
         {
             "name": "psr/http-message",
@@ -5588,7 +5588,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/theme/twentyseventeen.1.4.zip",
-                "reference": null,
+                "reference": "1.4",
                 "shasum": null
             },
             "require": {

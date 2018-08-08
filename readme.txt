@@ -4,7 +4,7 @@ Tags: referrals, affiliate, loyalty, gamification, social selling, compensation,
 Requires at least: 3.8
 Requires PHP: 5.6
 Tested up to: 4.9.6
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPL-2.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,18 @@ or
 == Frequently Asked Questions ==
 
 == Changelog ==
+
+= 0.2.0 =
+
+= Bug Fixes =
+
+* Add success notification when authorization is successful
+* Make plugin compatible with PHP 5.6
+
+= Features =
+
+* Add igni.co suffix after workspace field for better ux
+* Add validation to admin authorization form
 
 = 0.1.0 =
 * Ignico
