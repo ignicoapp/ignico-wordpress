@@ -22,7 +22,7 @@
 			$settings = $plugin['admin/settings']->get_settings();
 		?>
 
-		<input type="hidden" name="_wp_http_referer" value="<?php echo esc_attr( esc_url( $plugin['admin/pages']->get_admin_plugin_url( 'options', 'authorization' ) ) ); ?>">
+		<input type="hidden" name="_wp_http_referer" value="<?php echo esc_attr( esc_url( $plugin['admin/pages']->get_admin_plugin_url( 'ignico', 'authorization' ) ) ); ?>">
 
 		<div class="card">
 			<h2><?php esc_html_e( 'Plugin authorization', 'ignico' ); ?></h2>

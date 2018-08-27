@@ -10,6 +10,8 @@ namespace IgnicoWordPress\Ignico;
 
 use IgnicoWordPress\Core\Init as CoreInit;
 
+use IgnicoWordPress\Admin\Settings;
+
 /**
  * Client for WordPress calls to Ignico service.
  *
@@ -79,22 +81,53 @@ class Referral {
 
 		$referral_get = filter_input( INPUT_GET, self::REFERRAL_PARAMETER_NAME, FILTER_SANITIZE_STRING );
 
+		$settings = $this->plugin['admin/settings']->get_settings();
+
 		/**
-		 * Save cookie referral when get parameter is provided and cookie is not
-		 * yet set.
+		 * When get parameter is not provided do nothing.
+		 */
+		if ( ! $referral_get || empty( $referral_get ) ) {
+			return;
+		}
+
+		/**
+		 * When cookie is already provided and settings do not allow to
+		 * overwrite cookie do nothing.
 		 */
 		if (
-			( $referral_get && ! empty( $referral_get ) ) &&
-			( ! $this->referral || empty( $this->referral ) )
+			( $this->referral && ! empty( $this->referral ) ) &&
+			( Settings::DO_NOT_ALLOW_OVERWRITE === $settings['cookie_flow'] )
 		) {
+			return;
+		}
 
-			$this->referral = $referral_get;
+		$this->referral = $referral_get;
+
+		$url  = get_bloginfo( 'url' );
+		$host = wp_parse_url( $url, PHP_URL_HOST );
+
+		// phpcs:disable -- WordPres VIP do not allow to set cookies
+		setcookie( self::REFERRAL_COOKIE_NAME, $this->referral, strtotime( '+10 years' ), '/', $host );
+		// phpcs:enable
+	}
+
+	/**
+	 * Delete cookie with referral
+	 *
+	 * @return void
+	 */
+	public function delete_cookie() {
+
+		// phpcs:disable -- WordPres VIP do not allow to use cookies
+		if ( isset( $_COOKIE[ self::REFERRAL_COOKIE_NAME ] ) ) {
+			unset( $_COOKIE[ self::REFERRAL_COOKIE_NAME ] );
+		// phpcs:enable
 
 			$url  = get_bloginfo( 'url' );
 			$host = wp_parse_url( $url, PHP_URL_HOST );
 
 			// phpcs:disable -- WordPres VIP do not allow to set cookies
-			setcookie( self::REFERRAL_COOKIE_NAME, $this->referral, strtotime( '+10 years' ), '/', $host );
+			setcookie( self::REFERRAL_COOKIE_NAME , '', time() - 3600, '/', $host );
 			// phpcs:enable
 		}
 	}

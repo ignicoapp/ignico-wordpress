@@ -8,6 +8,7 @@
 
 namespace IgnicoWordPress\Admin;
 
+use IgnicoWordPress\Admin\Form\Init as FormInit;
 use IgnicoWordPress\Admin\Pages\Init as PagesInit;
 
 /**
@@ -47,6 +48,7 @@ class Init {
 	private function load_dependencies() {
 
 		$this->plugin['admin/settings'] = new Settings( $this->plugin );
+		$this->plugin['admin/form']     = new FormInit( $this->plugin );
 		$this->plugin['admin/pages']    = new PagesInit( $this->plugin );
 		$this->plugin['admin/assets']   = new Assets( $this->plugin );
 	}
