@@ -204,7 +204,7 @@
 	<!-- ============================================  -->
 	<target name="inspect:fix" description="Auto fix code styling errors in php files using phpcbf comamnd." depends="setup:symlink">
 		<echo msg="Auto fix code styling errors" />
-		<exec command="./vendor/bin/phpcbf  --extensions=php --ignore=${project.basedir}/vendor,${project.basedir}/wordpress --standard=./rules/phpcs.xml" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/phpcbf  --extensions=php --ignore=${project.basedir}/vendor,${project.basedir}/wordpress --standard=./rules/phpcs-wordpress.xml" passthru="true" checkreturn="true" />
 	</target>
 
 	<target name="inspect" description="Inspect php code. Execute inspect:lint, inspect:phpcs, inspect:phpcpd, inspect:phpmd." depends="inspect:lint, inspect:phpcs, inspect:phpcpd, inspect:phpmd">
