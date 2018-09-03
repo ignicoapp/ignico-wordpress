@@ -41,7 +41,7 @@ class Init_Test extends TestCase {
 
 		$this->assertEquals( 'ignico', $init['id'] );
 		$this->assertEquals( 'Ignico', $init['name'] );
-		$this->assertEquals( '0.2.0', $init['version'] );
+		$this->assertEquals( '0.3.0', $init['version'] );
 	}
 
 	/**

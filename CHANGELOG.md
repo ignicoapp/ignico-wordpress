@@ -1,11 +1,21 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/ignicoapp/ignico-wordpress/compare/0.2.0...0.3.0) (2018-09-03)
+
+
+### Features
+
+* Add referral cookie settings ([93a2d8f](https://github.com/ignicoapp/ignico-wordpress/commit/93a2d8f))
+
+
+
 <a name="0.2.0"></a>
-# 0.2.0 (2018-08-08)
+# [0.2.0](https://github.com/ignicoapp/ignico-wordpress/compare/33a23ec...0.2.0) (2018-08-08)
 
 
 ### Bug Fixes
 
 * Add success notification when authorization is successful ([33a23ec](https://github.com/ignicoapp/ignico-wordpress/commit/33a23ec))
-* Rename "Resource" to "Res" because of PHP 7.0 soft reserved words and remove return type declaration to be compatible with PHP 5.6 ([d87cfc8](https://github.com/ignicoapp/ignico-wordpress/commit/d87cfc8))
+* Rename "Resource" to "Res" because of PHP 7.0 soft reserved words and remove return type declaration to be compatible with PHP 5.6 ([cf9a0f9](https://github.com/ignicoapp/ignico-wordpress/commit/cf9a0f9))
 
 
 ### Features
