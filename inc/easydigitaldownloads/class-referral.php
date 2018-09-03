@@ -47,6 +47,8 @@ class Referral {
 	 */
 	public function save_referral( $payment_id, $payment ) {
 
+		$settings = $this->plugin['admin/settings']->get_settings();
+
 		$status = $payment->status;
 
 		/**
@@ -64,6 +66,10 @@ class Referral {
 		}
 
 		update_post_meta( $payment_id, $referral_key, $referral );
+
+		if( (bool) $settings['cookie_removal'] ) {
+			$this->plugin['ignico/referral']->delete_cookie();
+		}
 	}
 
 	/**

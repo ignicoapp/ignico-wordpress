@@ -46,6 +46,8 @@ class Referral {
 	 */
 	public function save_referral( $order_id ) {
 
+		$settings = $this->plugin['admin/settings']->get_settings();
+
 		$referral_key = '_ignico_referral';
 		$referral     = $this->plugin['ignico/referral']->get_referral();
 
@@ -54,6 +56,10 @@ class Referral {
 		}
 
 		update_post_meta( $order_id, $referral_key, $referral );
+
+		if ( (bool) $settings['cookie_removal'] ) {
+			$this->plugin['ignico/referral']->delete_cookie();
+		}
 	}
 
 	/**

@@ -26,15 +26,34 @@ class Settings {
 	private $plugin;
 
 	/**
+	 * Coockie flow type.
+	 *
+	 * @var string Type of cookie flow.
+	 */
+	const ALLOW_OVERWRITE = 'allow_overwrite';
+
+	/**
+	 * Coockie flow type.
+	 *
+	 * @var string Type of cookie flow.
+	 */
+	const DO_NOT_ALLOW_OVERWRITE = 'do_not_allow_overwrite';
+
+	/**
 	 * Default settings
 	 *
 	 * @var array
 	 */
 	private $defaults = array(
-		'workspace'     => '',
-		'client_id'     => '',
-		'client_secret' => '',
-		'access_token'  => '',
+		'workspace'      => '',
+		'client_id'      => '',
+		'client_secret'  => '',
+
+		'cookie_flow'    => self::ALLOW_OVERWRITE,
+		'cookie_removal' => false,
+
+		'access_token'   => '',
+
 	);
 
 	/**
@@ -61,6 +80,19 @@ class Settings {
 		$values = wp_parse_args( $settings, $this->defaults );
 
 		return $values;
+	}
+
+	/**
+	 * Get available cookie flow settings
+	 *
+	 * @return array Available cookie flow settings
+	 */
+	public function get_available_cookie_flow() {
+
+		return array(
+			self::ALLOW_OVERWRITE        => 'Allow to overwrite cookie with new referral link',
+			self::DO_NOT_ALLOW_OVERWRITE => 'Do not allow to overwrite cookie with new referral link',
+		);
 	}
 
 	/**

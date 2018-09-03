@@ -102,7 +102,7 @@ class Init extends Container {
 		 *
 		 * @var string $notification_lock
 		 */
-		$this['notification/lock'] = __( 'Before setting up Ignico authorize plugin to Ignico service.', 'ignico' );
+		$this['notification/lock'] = __( 'Before changing plugin settings authorize plugin.', 'ignico' );
 
 		/**
 		 * Notification informing user that authorization for some reason failed
@@ -119,6 +119,13 @@ class Init extends Container {
 		$this['notification/authorization_successful'] = __( 'Authorization was successful.', 'ignico' );
 
 		/**
+		 * Notification informing user about successful settings update.
+		 *
+		 * @var string $notification_authentication_failed
+		 */
+		$this['notification/settings_updated_successfully'] = __( 'Settings updated successfully.', 'ignico' );
+
+		/**
 		 * Notification informing user that provided field is required
 		 *
 		 * @var string $notification_form_field_required
@@ -132,6 +139,20 @@ class Init extends Container {
 		 * @var string $notification_form_field_workspace
 		 */
 		$this['notification/form/field/workspace'] = __( 'Provided value is not valid workspace name. Allowed characters are letters, numbers and hyphens.', 'ignico' );
+
+		/**
+		 * Notification informing user that provided cookie flow value is not valid
+		 *
+		 * @var string $notification_form_field_cookie_flow
+		 */
+		$this['notification/form/field/cookie_flow'] = __( 'Provided value is not valid cookie flow value. Cookie flow should be one of provided available values.', 'ignico' );
+
+		/**
+		 * Notification informing user that provided cookie removal value is not valid
+		 *
+		 * @var string $notification_form_field_cookie_removal
+		 */
+		$this['notification/form/field/cookie_removal'] = __( 'Provided value is not valid cookie removal value. Cookie removal value should be type of bool.', 'ignico' );
 
 	}
 

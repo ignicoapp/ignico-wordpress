@@ -26,6 +26,13 @@ class Init {
 	private $plugin;
 
 	/**
+	 * Current admin page.
+	 *
+	 * @var array $current_page Current admin page
+	 */
+	private $current_page;
+
+	/**
 	 * Current admin tab.
 	 *
 	 * @var array $current_tab Current admin tab
@@ -55,7 +62,7 @@ class Init {
 		 * @var array $tabs Plugin tab screens.
 		 */
 		$this->plugin['admin/pages/pages'] = array(
-			'options' => array(
+			'ignico' => array(
 				'parent_slug' => false,
 				'page_title'  => 'Ignico',
 				'menu_title'  => 'Ignico',
@@ -87,13 +94,40 @@ class Init {
 	}
 
 	/**
+	 * Initialize current page in WordPress admin area
+	 *
+	 * @return void
+	 */
+	public function init_current_page() {
+
+		$get_page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+
+		foreach ( $this->plugin['admin/pages/pages'] as $page ) {
+
+			if ( $get_page === $page['menu_slug'] ) {
+				$this->current_page = $page;
+			}
+		}
+	}
+
+	/**
 	 * Initialize current tab in WordPress admin area
 	 *
 	 * @return void
 	 */
 	public function init_current_tab() {
 
-		$this->current_tab = $this->plugin['admin/pages/tabs']['authorization'];
+		$get_tab = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
+
+		foreach ( $this->plugin['admin/pages/tabs'] as $tab ) {
+			if ( $get_tab === $tab['tab_slug'] ) {
+				$this->current_tab = $tab;
+			}
+		}
+
+		if ( is_null( $this->current_tab ) ) {
+			$this->current_tab = $this->plugin['admin/pages/tabs']['settings'];
+		}
 	}
 
 	/**
@@ -111,6 +145,17 @@ class Init {
 
 		) {
 			$this->plugin['notice']->add_notice( $this->plugin['notification/setup'], Notice::INFO, true );
+
+			if (
+				'ignico' === $this->current_page['menu_slug'] &&
+				'authorization' !== $this->current_tab['tab_slug']
+			) {
+
+				$this->plugin['notice']->add_flash_notice( $this->plugin['notification/lock'], Notice::WARNING, true );
+
+				wp_safe_redirect( $this->get_admin_plugin_url( 'ignico', 'authorization' ) );
+				exit;
+			}
 		}
 	}
 
@@ -213,14 +258,6 @@ class Init {
 	 */
 	public function display_tab() {
 
-		$get_tab = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
-
-		foreach ( $this->plugin['admin/pages/tabs'] as $tab ) {
-			if ( $get_tab === $tab['tab_slug'] ) {
-				$this->current_tab = $tab;
-			}
-		}
-
 		if ( ! is_callable( $this->current_tab['view'] ) ) {
 			throw new \Exception( 'Missing view for tab "' . $this->current_tab['tab_title'] . '"' );
 		}
@@ -240,17 +277,17 @@ class Init {
 	 *
 	 * @return string $url Url of the plugin admin page.
 	 */
-	public function get_admin_plugin_url( $page = 'options', $tab = null ) {
+	public function get_admin_plugin_url( $page = 'ignico', $tab = null ) {
 
 		if ( ! isset( $this->plugin['admin/pages/pages'][ $page ] ) ) {
-			throw \Exception( 'There is no such a page' );
+			throw new \Exception( 'There is no such a page' );
 		}
 
 		$url = menu_page_url( $this->plugin['admin/pages/pages'][ $page ]['menu_slug'], false );
 
 		if ( $tab ) {
 			if ( ! isset( $this->plugin['admin/pages/tabs'][ $tab ] ) ) {
-				throw \Exception( 'There is no such a tab' );
+				throw new \Exception( 'There is no such a tab' );
 			}
 
 			$url .= '&tab=' . $this->plugin['admin/pages/tabs'][ $tab ]['tab_slug'];
@@ -279,7 +316,7 @@ class Init {
 					$classes   = array( 'nav-tab', 'nav-tab-' . $tab['tab_slug'] );
 					$classes[] = ( $tab === $this->current_tab ) ? 'nav-tab-active' : '';
 
-					$url = $this->get_admin_plugin_url( 'options', $tab_key );
+					$url = $this->get_admin_plugin_url( 'ignico', $tab_key );
 
 					printf( '<a class="%s" href="%s" >%s</a>', esc_attr( join( ' ', $classes ) ), esc_url( $url ), esc_html( $tab['tab_title'] ) );
 
@@ -332,6 +369,7 @@ class Init {
 	 */
 	private function load_dependencies() {
 
+		$this->plugin['admin/pages/settings']      = new Settings( $this->plugin );
 		$this->plugin['admin/pages/authorization'] = new Authorization( $this->plugin );
 	}
 
@@ -344,15 +382,17 @@ class Init {
 
 		$this->load_dependencies();
 
+		$this->plugin['admin/pages/settings']->run();
 		$this->plugin['admin/pages/authorization']->run();
 
 		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_pages' );
 		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_tabs' );
+		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_current_page' );
 		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_current_tab' );
-		$this->plugin['loader']->add_action( 'admin_menu', $this, 'check_if_configured' );
 		$this->plugin['loader']->add_action( 'admin_menu', $this, 'create_menu' );
 
 		$this->plugin['loader']->add_action( 'admin_init', $this, 'register_settings' );
+		$this->plugin['loader']->add_action( 'admin_init', $this, 'check_if_configured' );
 
 		$this->plugin['loader']->add_action( 'current_screen', $this, 'dispatch_controllers' );
 	}
