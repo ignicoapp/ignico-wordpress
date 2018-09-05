@@ -10,13 +10,15 @@
     "babel-register": "^6.26.0",
     "conventional-changelog-cli": "^2.0.1",
     "gulp": "4.0.0",
+    "gulp-bump": "^3.1.1",
     "gulp-clean": "^0.4.0",
     "gulp-iconfont": "^9.2.0",
     "gulp-iconfont-css": "^2.1.0",
     "gulp-postcss": "^7.0.1",
     "gulp-rename": "^1.2.3",
     "gulp-sass": "^4.0.1",
-    "gulp-sourcemaps": "^2.6.4"
+    "gulp-sourcemaps": "^2.6.4",
+    "minimist": "^1.2.0"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -40,6 +42,11 @@
   "scripts": {
     "dev": "gulp dev --require babel-register --gulpfile tasks",
     "build:dev": "NODE_ENV=development gulp build:dev --require babel-register --gulpfile tasks",
-    "build:prod": "NODE_ENV=production gulp build:prod --require babel-register --gulpfile tasks"
+    "build:prod": "NODE_ENV=production gulp build:prod --require babel-register --gulpfile tasks",
+
+    "bump:prerelease": "NODE_ENV=production gulp bump --type prerelease --require babel-register --gulpfile tasks",
+    "bump:patch": "NODE_ENV=production gulp bump --type patch --require babel-register --gulpfile tasks",
+    "bump:minor": "NODE_ENV=production gulp bump --type minor --require babel-register --gulpfile tasks",
+    "bump:major": "NODE_ENV=production gulp bump --type major --require babel-register --gulpfile tasks"
   }
 }

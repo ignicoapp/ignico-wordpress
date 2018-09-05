@@ -26,6 +26,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+if ( ! defined( 'IGNICO_VERSION' ) )
+	define( 'IGNICO_VERSION', '0.3.0' );
+
 /**
  * Load autoloader to not bother to requiring classes.
  */

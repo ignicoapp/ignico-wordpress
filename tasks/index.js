@@ -1,6 +1,7 @@
 import gulp from 'gulp'
 
-import stylesheet from './stylesheet';
+import './stylesheet';
+import './bump';
 
 gulp.task('watch', gulp.parallel( [
     'watch:stylesheet'

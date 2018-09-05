@@ -310,7 +310,47 @@
 	</target>
 
 	<!-- ============================================  -->
-	<!-- Target: deploy:wp                             -->
+	<!-- Target: bump:prerelease                       -->
+	<!-- ============================================  -->
+	<target name="bump:prerelease" description="Bump prerelease version in packages.json, composer.json and ignico.php files.">
+
+		<echo msg="Bumping version in packages.json, composer.json and ignico.php files." />
+
+		<exec command="npm run bump:prerelease" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: bump:patch                            -->
+	<!-- ============================================  -->
+	<target name="bump:patch" description="Bump patch version in packages.json, composer.json and ignico.php files.">
+
+		<echo msg="Bumping version in packages.json, composer.json and ignico.php files." />
+
+		<exec command="npm run bump:patch" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: bump:minor                            -->
+	<!-- ============================================  -->
+	<target name="bump:minor" description="Bump minor version in packages.json, composer.json and ignico.php files.">
+
+		<echo msg="Bumping version in packages.json, composer.json and ignico.php files." />
+
+		<exec command="npm run bump:minor" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: bump:major                            -->
+	<!-- ============================================  -->
+	<target name="bump:major" description="Bump major version in packages.json, composer.json and ignico.php files.">
+
+		<echo msg="Bumping version in packages.json, composer.json and ignico.php files." />
+
+		<exec command="npm run bump:major" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: changelog                             -->
 	<!-- ============================================  -->
 	<target name="changelog" description="Generate changelog based on commits.">
 

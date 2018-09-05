@@ -23,8 +23,7 @@ use IgnicoWordPress\EasyDigitalDownloads\Init as EasyDigitalDownloadsInit;
  * This is used to define internationalization, admin-specific hooks, and
  * public-facing site hooks.
  *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
+ * Also maintains the unique identifier of this plugin.
  *
  * @package    IgnicoWordPress
  * @subpackage IgnicoWordPress/inc
@@ -42,7 +41,7 @@ class Init extends Container {
 	/**
 	 * Define the core functionality of the plugin.
 	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
+	 * Set the plugin name and the plugin id that can be used throughout the plugin.
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 */
@@ -61,13 +60,6 @@ class Init extends Container {
 		 * @var      string $name The string used to display theme name.
 		 */
 		$this['name'] = 'Ignico';
-
-		/**
-		 * The current version of the plugin.
-		 *
-		 * @var      string    $version    The current version of the plugin.
-		 */
-		$this['version'] = '0.3.0';
 
 		/**
 		 * The plugin path.
