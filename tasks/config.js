@@ -13,21 +13,22 @@ import gulp from 'gulp';
  *
  * Path relative to path where gulp is executed. Probably root directory
  */
-let src = './assets';
+let src = '.';
 let dist = '.';
 let date = Date.now();
 
 /**
  * File paths
  */
-let srcScssPath = src + '/scss';
+let srcAssets = src + '.assets';
+let srcScssPath = srcAssets + '/scss';
 let distCssPath = dist + '/css';
 
 let gulpPath = './tasks';
 
-let srcSvgPath = src + '/svg';
+let srcSvgPath = srcAssets + '/svg';
 
-let srcFontsPath = src + '/fonts';
+let srcFontsPath = srcAssets + '/fonts';
 let distFontsPath = dist + '/fonts';
 
 let cssWatchGlob = [ srcScssPath + '/**/*.scss' ];
@@ -58,7 +59,8 @@ let config = {
     src,
     dist,
     date,
-	srcScssPath,
+    srcAssets,
+    srcScssPath,
     distCssPath,
 
     gulpPath,

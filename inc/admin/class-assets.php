@@ -52,7 +52,7 @@ class Assets {
 		/**
 		 * Main plugin style
 		 */
-		wp_register_style( $this->plugin['id'], $this->plugin['url'] . '/css/style.css', array(), $this->plugin['version'], 'all' );
+		wp_register_style( $this->plugin['id'], $this->plugin['url'] . '/css/style.css', array(), IGNICO_VERSION, 'all' );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Assets {
 		/**
 		 * Main plugin style
 		 */
-		wp_register_style( $this->plugin['id'], $this->plugin['url'] . '/css/style.min.css', array(), $this->plugin['version'], 'all' );
+		wp_register_style( $this->plugin['id'], $this->plugin['url'] . '/css/style.min.css', array(), IGNICO_VERSION, 'all' );
 	}
 
 	/**
