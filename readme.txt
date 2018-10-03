@@ -3,7 +3,7 @@ Contributors: ignico, kierzniak
 Tags: referrals, affiliate, loyalty, gamification, social selling, compensation, mlm, network marketing, growth hacking
 Requires at least: 3.8
 Requires PHP: 5.6
-Tested up to: 4.9.6
+Tested up to: 4.9.8
 Stable tag: trunk
 License: GPL-2.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -68,6 +68,10 @@ Additionally you can also configure cookie settings of the plugin in „Settings
 == Frequently Asked Questions ==
 
 == Changelog ==
+
+= 0.3.1 =
+
+* Update readme
 
 = 0.3.0 =
 
