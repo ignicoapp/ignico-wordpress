@@ -1,22 +1,18 @@
 <?php
 /**
- * Initial class to manage woocommerce functionalities
+ * Initial class to manage WooCommerce My Account page
  *
  * @package    IgnicoWordPress
- * @subpackage IgnicoWordPress/woocommerce
+ * @subpackage IgnicoWordPress/woocommerce/myaccount
  */
 
-namespace IgnicoWordPress\WooCommerce;
-
-use \IgnicoWordPress\Core\Init as CoreInit;
-
-use \IgnicoWordPress\WooCommerce\MyAccount\Init as MyAccountInit;
+namespace IgnicoWordPress\WooCommerce\MyAccount;
 
 /**
- * Initial class to manage woocommerce functionalities
+ * Initial class to manage WooCommerce My Account page
  *
  * @package    IgnicoWordPress
- * @subpackage IgnicoWordPress/woocommerce
+ * @subpackage IgnicoWordPress/woocommerce/myaccount
  */
 class Init {
 
@@ -35,7 +31,6 @@ class Init {
 	 * @return Init
 	 */
 	public function __construct( $plugin ) {
-
 		$this->plugin = $plugin;
 
 		$this->load_dependencies();
@@ -48,9 +43,6 @@ class Init {
 	 */
 	private function load_dependencies() {
 
-		$this->plugin['woocommerce/referral']  = new Referral( $this->plugin );
-		$this->plugin['woocommerce/ignico']    = new Ignico( $this->plugin );
-		$this->plugin['woocommerce/myaccount'] = new MyAccountInit( $this->plugin );
 	}
 
 	/**
@@ -59,7 +51,6 @@ class Init {
 	 * @return void
 	 */
 	public function run() {
-		$this->plugin['woocommerce/referral']->run();
-		$this->plugin['woocommerce/ignico']->run();
+
 	}
 }
