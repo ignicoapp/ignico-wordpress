@@ -1,7 +1,7 @@
 {
     "name": "ignico/ignico-wordpress",
     "description": "Ignico is rewards & commission automation engine that helps businesses create their referral, loyalty, MLM, gamification or social selling program on the top of existing e-commerce platforms or CRM's.",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+",
     "authors": [
