@@ -30,7 +30,7 @@
 		<!-- ============================================  -->
 		<!-- Symlink plugin itself to wp plugins dir       -->
 		<!-- ============================================  -->
-		<symlink target="${project.basedir}" link="${project.basedir}/wordpress/wp-content/plugins/${plugin}"  overwrite="true" />
+		<symlink target="./../../../" link="./wordpress/wp-content/plugins/${plugin}"  overwrite="true" />
 	</target>
 
 	<!-- ============================================  -->
