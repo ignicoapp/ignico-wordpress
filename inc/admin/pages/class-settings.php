@@ -104,6 +104,8 @@ class Settings {
 		$data['cookie_flow']    = trim( filter_var( $data['cookie_flow'], FILTER_SANITIZE_STRING ) );
 		$data['cookie_removal'] = trim( filter_var( $data['cookie_removal'], FILTER_SANITIZE_NUMBER_INT ) );
 
+		$data['consent_required'] = filter_var( $data['consent_required'], FILTER_VALIDATE_BOOLEAN );
+
 		/**
 		 * If data is not valid prevent from executing post controller.
 		 *
@@ -177,10 +179,84 @@ class Settings {
 			$valid                  = false;
 			$data['cookie_removal'] = $old_data['cookie_removal'];
 
-			$this->plugin['notice']->add_flash_notice( $this->plugin['notification/form/field/cookie_removal'], Notice::ERROR );
+			$this->plugin['notice']->add_flash_notice( sprintf( $this->plugin['notification/form/field/bool'], esc_html( __( 'Cookie removal', 'ignico' ) ) ), Notice::ERROR );
+		}
+
+		if ( ! $this->is_create_user_valid( $data ) ) {
+			$valid = false;
 		}
 
 		return $valid;
+	}
+
+	/**
+	 * Check if provided data are valid
+	 *
+	 * Pass data as reference to modify it without returning value.
+	 *
+	 * @param array $data Sanitized form data.
+	 *
+	 * @return boolean
+	 */
+	public function is_create_user_valid( &$data ) {
+
+		$valid = true;
+
+		if (
+			! $this->is_valid_exist( $data, 'consent_required', 'Consent' ) ||
+			! $this->is_valid_bool( $data, 'consent_required', 'Consent' ) ) {
+			$valid = false;
+		}
+
+		return $valid;
+	}
+
+	/**
+	 * Check if posted setting exist
+	 *
+	 * @param array  $data  Sanitized form data.
+	 * @param string $name  Settings option name.
+	 * @param array  $label Settings option label.
+	 *
+	 * @return bool
+	 */
+	public function is_valid_exist( $data, $name, $label ) {
+
+		$old_data = $this->plugin['admin/settings']->get_settings();
+
+		if ( ! isset( $data[ $name ] ) ) {
+			$data[ $name ] = $old_data[ $name ];
+
+			$this->plugin['notice']->add_flash_notice( sprintf( $this->plugin['notification/form/field/required'], esc_html( __( $label, 'ignico' ) ) ), Notice::ERROR );
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check if posted setting is bool
+	 *
+	 * @param array  $data  Sanitized form data.
+	 * @param string $name  Settings option name.
+	 * @param array  $label Settings option label.
+	 *
+	 * @return bool
+	 */
+	public function is_valid_bool( $data, $name, $label ) {
+
+		$old_data = $this->plugin['admin/settings']->get_settings();
+
+		if ( ! is_bool( $data[ $name ] ) ) {
+			$data[ $name ] = $old_data[ $name ];
+
+			$this->plugin['notice']->add_flash_notice( sprintf( $this->plugin['notification/form/field/bool'], esc_html( __( $label, 'ignico' ) ) ), Notice::ERROR );
+
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

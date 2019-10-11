@@ -6,32 +6,34 @@
  * var config = require('./config');
  * console.log(config.src);
  */
-import gulp from 'gulp';
 
 /**
  * Base variables
  *
  * Path relative to path where gulp is executed. Probably root directory
  */
-let src = '.';
+let src = './assets';
 let dist = '.';
 let date = Date.now();
 
 /**
  * File paths
  */
-let srcAssets = src + '.assets';
-let srcScssPath = srcAssets + '/scss';
-let distCssPath = dist + '/css';
-
 let gulpPath = './tasks';
 
-let srcSvgPath = srcAssets + '/svg';
+let srcCssPath = src + '/scss';
+let distCssPath = dist + '/css';
 
-let srcFontsPath = srcAssets + '/fonts';
+let srcJsPath = src + '/js';
+let distJsPath = dist + '/js';
+
+let srcSvgPath = src + '/svg';
+
+let srcFontsPath = src + '/fonts';
 let distFontsPath = dist + '/fonts';
 
-let cssWatchGlob = [ srcScssPath + '/**/*.scss' ];
+let cssWatchGlob = [ srcCssPath + '/**/*.scss' ];
+let jsWatchGlob = [ srcJsPath + '/**/*.scss' ];
 
 /**
  * Watch options
@@ -58,12 +60,15 @@ let sassOptionsProduction = Object.assign({
 let config = {
     src,
     dist,
-    date,
-    srcAssets,
-    srcScssPath,
-    distCssPath,
+	date,
 
     gulpPath,
+
+    srcCssPath,
+	distCssPath,
+
+	srcJsPath,
+    distJsPath,
 
     srcSvgPath,
 
@@ -71,6 +76,7 @@ let config = {
     distFontsPath,
 
     cssWatchGlob,
+    jsWatchGlob,
 
     sassOptions,
     sassOptionsDevelopment,

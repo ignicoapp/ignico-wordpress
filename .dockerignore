@@ -1,0 +1,4 @@
+# Ignore selected files and directories during build process
+
+# Ignore uploads directory
+wordpress/wp-content/uploads

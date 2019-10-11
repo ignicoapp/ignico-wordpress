@@ -26,10 +26,12 @@
 
 		<div class="card">
 			<h2><?php esc_html_e( 'Plugin authorization', 'ignico' ); ?></h2>
-			<p><?php esc_html_e( 'This plugin requires access to your Ignico account. To access Ignico, you have to provide Client id and Client secret from Ignico Admin Panel -> Integration > OAuth clients page.', 'ignico' ); ?></p>
+			<p><?php esc_html_e( 'This plugin requires access to your Ignico account. To access Ignico, you have to provide Client id and Client secret from Ignico Admin Panel -> Integration and add a new API client.', 'ignico' ); ?></p>
 		</div>
 
 		<table class="form-table">
+			<h3><?php esc_html_e( 'Ignico API credentials', 'ignico' ); ?></h3>
+			<p><?php esc_html_e( 'In order to get API credentials requested below, you need to go to your Ignico instance Admin panel -> Integrations and add a new API client.', 'ignico' ); ?></p>
 			<tr valign="top">
 				<th scope="row"><?php esc_html_e( 'Workspace:', 'ignico' ); ?></th>
 				<td>

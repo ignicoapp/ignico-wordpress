@@ -30,7 +30,7 @@
 		<!-- ============================================  -->
 		<!-- Symlink plugin itself to wp plugins dir       -->
 		<!-- ============================================  -->
-		<symlink target="${project.basedir}" link="${project.basedir}/wordpress/wp-content/plugins/${plugin}"  overwrite="true" />
+		<symlink target="./../../../" link="./wordpress/wp-content/plugins/${plugin}"  overwrite="true" />
 	</target>
 
 	<!-- ============================================  -->
@@ -118,7 +118,103 @@
 	<target name="wp:plugins" depends="dotenv" description="Activate installed plugins..">
 		<echo msg="Activate plugins" />
 
-		<exec command="./vendor/bin/wp plugin activate `./vendor/bin/wp plugin list --status=inactive --format=csv --path=${env.WP_PATH} --allow-root | cut -d',' -f1 | tail -n +2 | tr '\n' ' '` --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp plugin activate --all --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: wpplugins                             -->
+	<!-- ============================================  -->
+	<target name="wp:wc:update" depends="dotenv" description="Update WooCommerce database">
+		<echo msg="Update WooCommerce database" />
+
+		<exec command="./vendor/bin/wp wc update --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: wp:theme                              -->
+	<!-- ============================================  -->
+	<target name="wp:theme" depends="dotenv" description="Activate installed theme.">
+		<echo msg="Activate theme" />
+
+		<exec command="./vendor/bin/wp theme activate ${env.WP_THEME} --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: wp:options                            -->
+	<!-- ============================================  -->
+	<target name="wp:options" depends="dotenv" description="Set WordPress with default options. See build.xml file for details.">
+		<echo msg="Set WordPress default options" />
+
+		<!-- Remove WordPress blog description -->
+		<exec command="./vendor/bin/wp option update 'blogdescription' '' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Remove WordPress annoying notices -->
+		<exec command="./vendor/bin/wp user meta update '1' 'show_try_gutenberg_panel' '0' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp user meta update '1' 'show_welcome_panel' '0' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Remove WooCommerce annoying notices -->
+		<exec command="./vendor/bin/wp user meta update '1' 'dismissed_no_secure_connection_notice' '1' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp user meta update '1' 'dismissed_install_notice' '1' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_admin_notices' '{}' --format='json' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Remove Storefront annoying notices -->
+
+
+		<!-- Set WooCommerce settings -->
+		<exec command="./vendor/bin/wp option update 'woocommerce_product_type' 'yes' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_allow_tracking' 'no' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_enable_reviews' 'no' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Set default WooCommerce currency -->
+		<exec command="./vendor/bin/wp option update 'woocommerce_currency' 'PLN' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_currency_pos' 'right' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_price_thousand_sep' ' ' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_price_decimal_sep' ',' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_price_num_decimals' '2' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<exec command="./vendor/bin/wp option update 'woocommerce_ppec_paypal_settings' '{ &quot;reroute_requests&quot;: false, &quot;email&quot;: false }' --format='json' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_cheque_settings' '{ &quot;enabled&quot;: &quot;no&quot; }' --format='json' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_bacs_settings' '{ &quot;enabled&quot;: &quot;yes&quot;,  &quot;title&quot;: &quot;Bank transfer&quot; }' --format='json' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_cod_settings' '{ &quot;enabled&quot;: &quot;no&quot; }' --format='json' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_gateway_order' '[ &quot;bacs&quot;, &quot;cheque&quot;, &quot;cod&quot;, &quot;paypal&quot; ]' --format='json' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_flat_rate_1_settings' '{ &quot;title&quot;: &quot;Flat rate&quot;, &quot;tax_status&quot;: &quot;taxable&quot;, &quot;cost&quot;: &quot;10&quot; }' --format='json' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_flat_rate_2_settings' '{ &quot;title&quot;: &quot;Flat rate&quot;, &quot;tax_status&quot;: &quot;taxable&quot;, &quot;cost&quot;: &quot;50&quot; }' --format='json' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Create shipping zone for Poland -->
+		<exec command="./vendor/bin/wp wc shipping_zone create --name='Poland' --user=1 --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Assign Poland country to Polska shipping zone -->
+		<exec command="./vendor/bin/wp db query 'INSERT INTO `wp_woocommerce_shipping_zone_locations` (`location_id`, `zone_id`, `location_code`, `location_type`) VALUES (1,1,&quot;PL&quot;,&quot;country&quot;);' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Assign shipping methods to Polska shipping zone -->
+		<exec command="./vendor/bin/wp db query 'INSERT INTO `wp_woocommerce_shipping_zone_methods` (`zone_id`, `instance_id`, `method_id`, `method_order`, `is_enabled`) VALUES (1,1,&quot;flat_rate&quot;,1,1), (0,2,&quot;flat_rate&quot;,1,1);' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Create default pages for WooCommerce -->
+		<exec command="./vendor/bin/wp wc tool run install_pages --user=1 --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Set full witdth template to Koszyk page -->
+		<exec command="./vendor/bin/wp post update 5 --page_template='template-fullwidth.php' --user=1 --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Set full witdth template to Zamówienie page -->
+		<exec command="./vendor/bin/wp post update 6 --page_template='template-fullwidth.php' --user=1 --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Set full witdth template to Moje Konto page -->
+		<exec command="./vendor/bin/wp post update 7 --page_template='template-fullwidth.php' --user=1 --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Set WooCommerce registration settings -->
+		<exec command="./vendor/bin/wp option update 'woocommerce_enable_signup_and_login_from_checkout' 'yes' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_enable_myaccount_registration' 'yes' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_registration_generate_password' 'no' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Create terms & conditions page -->
+		<exec command="./vendor/bin/wp post create --post_type=page --post_title='Terms and Conditions' --post_status='publish' --page_template='template-fullwidth.php' --porcelain --path=${env.WP_PATH} --allow-root" outputProperty="terms_and_conditions_page_id" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'woocommerce_terms_page_id' '${terms_and_conditions_page_id}' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
+		<!-- Home page -->
+		<exec command="./vendor/bin/wp post create --post_type=page --post_title='Homepage' --post_status='publish' --page_template='template-homepage.php' --porcelain --path=${env.WP_PATH} --allow-root" outputProperty="home_page_id" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'show_on_front' 'page' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/wp option update 'page_on_front' '${home_page_id}' --path=${env.WP_PATH} --allow-root" passthru="true" checkreturn="true" />
+
 	</target>
 
 	<!-- ============================================  -->
@@ -132,6 +228,9 @@
 		<phingcall target="wp:install" />
 		<phingcall target="wp:permalinks" />
 		<phingcall target="wp:plugins" />
+		<phingcall target="wp:wc:update" />
+		<phingcall target="wp:theme" />
+		<phingcall target="wp:options" />
 	</target>
 
 	<!-- ============================================  -->
@@ -146,6 +245,9 @@
 		<phingcall target="wp:install" />
 		<phingcall target="wp:permalinks" />
 		<phingcall target="wp:plugins" />
+		<phingcall target="wp:wc:update" />
+		<phingcall target="wp:theme" />
+		<phingcall target="wp:options" />
 	</target>
 
 	<!-- ============================================  -->
@@ -204,7 +306,7 @@
 	<!-- ============================================  -->
 	<target name="inspect:fix" description="Auto fix code styling errors in php files using phpcbf comamnd." depends="setup:symlink">
 		<echo msg="Auto fix code styling errors" />
-		<exec command="./vendor/bin/phpcbf  --extensions=php --ignore=${project.basedir}/vendor,${project.basedir}/wordpress --standard=./rules/phpcs.xml" passthru="true" checkreturn="true" />
+		<exec command="./vendor/bin/phpcbf  --extensions=php --standard=./rules/phpcs-wordpress.xml" passthru="true" checkreturn="true" />
 	</target>
 
 	<target name="inspect" description="Inspect php code. Execute inspect:lint, inspect:phpcs, inspect:phpcpd, inspect:phpmd." depends="inspect:lint, inspect:phpcs, inspect:phpcpd, inspect:phpmd">

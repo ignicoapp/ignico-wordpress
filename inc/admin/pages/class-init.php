@@ -62,10 +62,18 @@ class Init {
 		 * @var array $tabs Plugin tab screens.
 		 */
 		$this->plugin['admin/pages/pages'] = array(
-			'ignico' => array(
+			'ignico'          => array(
 				'parent_slug' => false,
 				'page_title'  => 'Ignico',
 				'menu_title'  => 'Ignico',
+				'capability'  => 'manage_options',
+				'menu_slug'   => 'ignico',
+				'view'        => array( $this, 'display_tab' ),
+			),
+			'ignico_settings' => array(
+				'parent_slug' => 'ignico',
+				'page_title'  => 'Settings',
+				'menu_title'  => 'Settings',
 				'capability'  => 'manage_options',
 				'menu_slug'   => 'ignico',
 				'view'        => array( $this, 'display_tab' ),
@@ -369,8 +377,9 @@ class Init {
 	 */
 	private function load_dependencies() {
 
-		$this->plugin['admin/pages/settings']      = new Settings( $this->plugin );
-		$this->plugin['admin/pages/authorization'] = new Authorization( $this->plugin );
+		$this->plugin['admin/pages/settings']        = new Settings( $this->plugin );
+		$this->plugin['admin/pages/authorization']   = new Authorization( $this->plugin );
+		$this->plugin['admin/pages/payout_requests'] = new Payout_Requests( $this->plugin );
 	}
 
 	/**
@@ -384,12 +393,13 @@ class Init {
 
 		$this->plugin['admin/pages/settings']->run();
 		$this->plugin['admin/pages/authorization']->run();
+		$this->plugin['admin/pages/payout_requests']->run();
 
-		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_pages' );
-		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_tabs' );
-		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_current_page' );
-		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_current_tab' );
-		$this->plugin['loader']->add_action( 'admin_menu', $this, 'create_menu' );
+		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_pages', 10 );
+		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_tabs', 10 );
+		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_current_page', 10 );
+		$this->plugin['loader']->add_action( 'admin_menu', $this, 'init_current_tab', 10 );
+		$this->plugin['loader']->add_action( 'admin_menu', $this, 'create_menu', 10 );
 
 		$this->plugin['loader']->add_action( 'admin_init', $this, 'register_settings' );
 		$this->plugin['loader']->add_action( 'admin_init', $this, 'check_if_configured' );

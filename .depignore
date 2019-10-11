@@ -1,0 +1,33 @@
+# Dotfiles
+.*
+
+# Executable
+bin
+
+# Packages
+composer.json
+composer.lock
+package.json
+yarn.lock
+
+# Libraries
+node_modules
+
+# Configuration
+rules
+tasks
+phpunit.xml
+build.xml
+
+# Tests
+tests
+
+# Config
+wp-config.php
+
+# Build
+build
+svn
+
+# I do not know from where this directory is getting from?
+etc

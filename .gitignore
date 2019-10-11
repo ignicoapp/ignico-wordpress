@@ -1,6 +1,8 @@
 # Ignore .env files
 .env
 
+# Ignore .env files
+
 # Ignore wordpress itself
 wordpress
 
@@ -9,6 +11,8 @@ vendor
 node_modules
 
 # Ignore generated assets
+.checksums
+js
 css
 fonts
 
@@ -19,3 +23,6 @@ svn
 # Reports
 coverage
 clover.xml
+
+# Ignore bash history from docker
+.bash_history

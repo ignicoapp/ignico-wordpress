@@ -1,63 +1,104 @@
 /**
- * Gulp task provider for processing styles
- */
+* Gulp task provider for processing styles
+*/
 import config from './config';
 
 import gulp from 'gulp';
+import once from 'gulp-once';
 import clean from 'gulp-clean';
-import rename from 'gulp-rename';
 import sass from 'gulp-sass';
 import postcss from 'gulp-postcss';
 import sourcemaps from 'gulp-sourcemaps';
+
+import stylelint from 'gulp-stylelint';
+
 import iconfont from 'gulp-iconfont';
 import iconfontCss from 'gulp-iconfont-css';
 
-let watcher;
+import scss from 'postcss-scss';
+import sorting from 'postcss-sorting';
 
-var postcssPlugins = [];
+import autoprefixer from 'autoprefixer';
+
+let postcssPlugins = [
+  autoprefixer()
+];
+
+let developmentBuildTasks = ['stylesheet:fix', 'stylesheet:sort', 'stylesheet:lint', 'stylesheet:iconfont', 'stylesheet:scss'];
+let productionBuildTasks  = ['stylesheet:lint', 'stylesheet:iconfont', 'stylesheet:scss'];
+
+let buildTasks = ( process.env.NODE_ENV === 'development' ) ? developmentBuildTasks : productionBuildTasks;
 
 /**
- * Task provided for cleaning css directory
- */
-gulp.task('clean:css', function() {
+* Task provided for cleaning css directory
+*/
+gulp.task('stylesheet:clean', function () {
 
-    return gulp.src(config.distCssPath + '/*', {
-        read: false
-    }).pipe(clean());
-
-});
-
-gulp.task('stylesheet:compile:development', function() {
-
-    return gulp.src(config.srcScssPath + '/*.scss')
-        // Init sourcemap
-            .pipe(sourcemaps.init())
-        // Compile scss files to css
-            .pipe(sass(config.sassOptionsDevelopment).on('error', sass.logError))
-        // Compile css files to css
-            .pipe(postcss(postcssPlugins))
-        // Save css file
-            .pipe(gulp.dest(config.distCssPath));
+  return gulp.src(config.distCssPath + '/*', {
+    read: false
+  }).pipe(clean());
 
 });
 
-gulp.task('stylesheet:compile:production', function() {
+gulp.task('stylesheet:lint', function () {
 
-    return gulp.src(config.srcScssPath + '/*.scss')
-        // Compile scss files to css
-            .pipe(sass(config.sassOptionsProduction).on('error', sass.logError))
-        // Compile css files to css
-            .pipe(postcss(postcssPlugins))
-		// Rename style.css to style.min.css
-			.pipe(rename({
-				suffix: '.min'
-			}))
-        // Save css file
-            .pipe(gulp.dest(config.distCssPath));
+  return gulp.src(config.srcCssPath + '/**/*.scss')
+    .pipe(once())
+    // Sort scss files and save to source directory
+    .pipe(stylelint({
+      reporters: [
+        {
+          formatter: 'string',
+          console: true
+        }
+      ],
+      // Stylelint will break watch if this is not true
+      failAfterError: false,
+    }))
+    // Save css file
+    .pipe(gulp.dest(config.srcCssPath));
 
 });
 
+gulp.task('stylesheet:fix', function () {
 
+  return gulp.src(config.srcCssPath + '/**/*.scss')
+    .pipe(once())
+    .pipe(stylelint({
+      // Fix sccs files using styleling
+      fix: true,
+
+      // Stylelint will not save files if this is set to true
+      failAfterError: false,
+    }))
+    // Save css file
+    .pipe(gulp.dest(config.srcCssPath));
+
+});
+
+gulp.task('stylesheet:sort', function () {
+
+  return gulp.src(config.srcCssPath + '/**/*.scss')
+    .pipe(once())
+    // Sort scss files and save to source directory
+    .pipe(postcss([
+      sorting()
+    ], { parser: scss }))
+    // Save css file
+    .pipe(gulp.dest(config.srcCssPath));
+
+});
+
+gulp.task('stylesheet:scss', function () {
+
+  return gulp.src(config.srcCssPath + '/*.scss')
+    // Init sourcemap
+    .pipe(sourcemaps.init())
+    .pipe(sass(config.sassOptions).on('error', sass.logError))
+	.pipe(postcss(postcssPlugins))
+	.pipe(gulp.dest(config.distCssPath));
+
+});
 
 gulp.task('stylesheet:iconfont', function() {
 
@@ -82,43 +123,18 @@ gulp.task('stylesheet:iconfont', function() {
 });
 
 /**
- * Task provided for processing scss files for development purpose
- */
-gulp.task('stylesheet:development', gulp.series([
-	'stylesheet:iconfont',
-    'stylesheet:compile:development',
-	'stylesheet:compile:production'
-]));
+* Taks provided for inspect js files
+*/
+gulp.task('stylesheet:inspect', gulp.series(['stylesheet:lint']));
 
 /**
- * Task provided for processing scss files for production purpose
- */
-gulp.task('stylesheet:production', gulp.series([
-	'stylesheet:iconfont',
-	'stylesheet:compile:development',
-    'stylesheet:compile:production'
-]));
+* Taks provided for gather all build tasks
+*/
+gulp.task('stylesheet:build', gulp.series(buildTasks));
 
 /**
- * Task provided for listening changes on files and processing it
- */
-gulp.task('watch:stylesheet', function(done) {
-
-    watcher = gulp.watch(config.cssWatchGlob, gulp.series('wdisable:stylesheet', 'stylesheet:development', 'wenable:stylesheet'));
-    done();
-
-});
-
-gulp.task('wdisable:stylesheet', function(done) {
-
-    watcher.unwatch(config.cssWatchGlob);
-    done();
-
-});
-
-gulp.task('wenable:stylesheet', function(done) {
-
-    watcher.add(config.cssWatchGlob);
-    done();
-
+* Task provided for listening changes on files and processing it
+*/
+gulp.task('stylesheet:watch', function () {
+  return gulp.watch(config.cssWatchGlob, gulp.series(['stylesheet:build']));
 });

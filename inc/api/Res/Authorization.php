@@ -3,6 +3,7 @@
 namespace IgnicoWordPress\Api\Res;
 
 use IgnicoWordPress\Api\Http\ClientInterface;
+use IgnicoWordPress\Api\Http\Message\Request;
 
 use IgnicoWordPress\Api\AbstractRes;
 use IgnicoWordPress\Api\Res\Authorization\AccessToken;
@@ -114,7 +115,7 @@ class Authorization extends AbstractRes {
 				'client_secret' => $this->clientSecret,
 			);
 
-			$request  = $this->buildRequest( 'post', $this->endpoint, $data );
+			$request  = $this->buildRequest( Request::METHOD_POST, $this->endpoint, $data );
 			$response = $this->getHttpClient()->sendRequest( $request );
 
 			$body = $this->parseBody( $response );

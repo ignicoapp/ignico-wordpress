@@ -17,7 +17,10 @@
       }
     ],
     "require": {
-        "psr/http-message": "^1.0"
+      "psr/http-message": "^1.0",
+      "fig/http-message-util": "^1.1",
+      "psr/log": "^1.1",
+        "roots/wordpress": "^5.2"
     },
     "require-dev": {
       "php": ">=5.6.0",
@@ -37,7 +40,8 @@
       "phploc/phploc": "4.0.0",
       "phpmd/phpmd": "2.4.2",
 
-      "wpackagist-theme/twentyseventeen": "1.4.0"
+      "wpackagist-plugin/woocommerce":"3.7.1",
+      "wpackagist-theme/storefront":"2.5.3"
     },
     "autoload": {
       "psr-4": {"IgnicoWordPress\\Api\\": "inc/api"}
@@ -45,16 +49,15 @@
     "extra": {
       "installer-paths": {
         "wordpress/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
-        "wordpress/wp-content/themes/{$name}/": ["type:wordpress-theme"]
+        "wordpress/wp-content/themes/{$name}/": ["type:wordpress-theme"],
+        "wordpress-install-dir": "wordpress"
       }
     },
     "scripts": {
       "post-install-cmd": [
-        "./vendor/bin/phing wp:download",
         "./vendor/bin/phing setup"
       ],
       "post-update-cmd": [
-        "./vendor/bin/phing wp:download",
         "./vendor/bin/phing setup"
       ]
     }

@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 
 use IgnicoWordPress\Api\Http\Exception\RequestException;
 use IgnicoWordPress\Api\Http\Message\Response;
+use IgnicoWordPress\Api\Http\Message\Request;
 
 class Client implements ClientInterface {
 
@@ -48,8 +49,26 @@ class Client implements ClientInterface {
 
 		curl_setopt( $ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1 );
 
-		curl_setopt( $ch, CURLOPT_POST, 1 );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $request->getBody()->getContents() );
+		if(
+			$request->getMethod() === Request::METHOD_POST
+		) {
+			curl_setopt( $ch, CURLOPT_POST, 1 );
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, $request->getBody()->getContents() );
+		}
+
+		if(
+			$request->getMethod() === Request::METHOD_PUT
+		) {
+			curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'PUT' );
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, $request->getBody()->getContents() );
+		}
+
+		if(
+			$request->getMethod() === Request::METHOD_PATCH
+		) {
+			curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'PATCH' );
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, $request->getBody()->getContents() );
+		}
 
 		// Parse headers
 		curl_setopt(

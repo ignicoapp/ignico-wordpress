@@ -113,14 +113,14 @@ class Notice {
 	public function add_flash_notice( $message, $type = self::INFO, $is_dismissible = false ) {
 
 		array_push(
-			$this->flash_notices, array(
+			$this->notices, array(
 				'message'        => $message,
 				'type'           => $type,
 				'is_dismissible' => $is_dismissible,
 			)
 		);
 
-		update_user_meta( get_current_user_id(), '_ignico_notices', $this->flash_notices ); // @codingStandardsIgnoreLine We do not care about some VIP rules
+		update_user_meta( get_current_user_id(), '_ignico_notices', $this->notices ); // @codingStandardsIgnoreLine We do not care about some VIP rules
 	}
 
 	/**
@@ -140,8 +140,6 @@ class Notice {
 		if ( $notices && is_array( $notices ) ) {
 			$this->notices = array_merge( $this->notices, $notices );
 		}
-
-		delete_user_meta( $user_id, '_ignico_notices' ); // @codingStandardsIgnoreLine We do not care about some VIP rules
 	}
 
 	/**
@@ -159,6 +157,26 @@ class Notice {
 
 			printf( '<div class="%s"><p>%s</p></div>', esc_attr( join( ' ', $classes ) ), esc_html( $notice['message'] ) );
 		}
+
+		delete_user_meta( get_current_user_id(), '_ignico_notices' ); // @codingStandardsIgnoreLine We do not care about some VIP rules
+	}
+
+	/**
+	 * If any notice exist display it
+	 *
+	 * @return void
+	 */
+	public function woocommerce_notice() {
+
+		foreach ( $this->notices as $notice ) {
+
+			$classes   = array( 'ignico-rce', 'woocommerce-notice' );
+			$classes[] = $this->get_woocommerce_type_class( $notice['type'] );
+
+			printf( '<div class="%s"><p>%s</p></div>', esc_attr( join( ' ', $classes ) ), esc_html( $notice['message'] ) );
+		}
+
+		delete_user_meta( get_current_user_id(), '_ignico_notices' ); // @codingStandardsIgnoreLine We do not care about some VIP rules
 	}
 
 	/**
@@ -168,7 +186,7 @@ class Notice {
 	 */
 	public function run() {
 
-		$this->plugin['loader']->add_action( 'admin_init', $this, 'init_flash_notices' );
+		$this->plugin['loader']->add_action( 'init', $this, 'init_flash_notices' );
 		$this->plugin['loader']->add_action( 'admin_notices', $this, 'admin_notice' );
 	}
 
@@ -216,6 +234,37 @@ class Notice {
 			case self::INFO:
 			default:
 				$class = 'notice-info';
+				break;
+		}
+
+		return $class;
+	}
+
+	/**
+	 * Get type class.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param int $type Type of the notice.
+	 *
+	 * @return string
+	 */
+	private function get_woocommerce_type_class( $type ) {
+
+		switch ( $type ) {
+
+			case self::ERROR:
+			case self::WARNING:
+				$class = 'woocommerce-error';
+				break;
+
+			case self::SUCCESS:
+				$class = 'woocommerce-message';
+				break;
+
+			case self::INFO:
+			default:
+				$class = 'woocommerce-info';
 				break;
 		}
 

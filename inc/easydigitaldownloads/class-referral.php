@@ -59,7 +59,7 @@ class Referral {
 		}
 
 		$referral_key = '_ignico_referral';
-		$referral     = $this->plugin['ignico/referral']->get_referral();
+		$referral     = $this->plugin['ignico/referrer']->get_referral();
 
 		if ( ! $referral || empty( $referral ) ) {
 			return;
@@ -68,7 +68,7 @@ class Referral {
 		update_post_meta( $payment_id, $referral_key, $referral );
 
 		if( (bool) $settings['cookie_removal'] ) {
-			$this->plugin['ignico/referral']->delete_cookie();
+			$this->plugin['ignico/referrer']->delete_cookie();
 		}
 	}
 

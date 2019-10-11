@@ -1,10 +1,7 @@
 .dashicons-ignico {
-	@extend .icon-butterfly;
+  @extend .icon-butterfly;
 
-	&:before {
-		position: relative;
-		top: 2px;
-
-		font-size: 16px;
-	}
+  &::before {
+    font-size: 20px;
+  }
 }

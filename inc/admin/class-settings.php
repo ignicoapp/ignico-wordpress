@@ -26,14 +26,14 @@ class Settings {
 	private $plugin;
 
 	/**
-	 * Coockie flow type.
+	 * Cookie flow type.
 	 *
 	 * @var string Type of cookie flow.
 	 */
 	const ALLOW_OVERWRITE = 'allow_overwrite';
 
 	/**
-	 * Coockie flow type.
+	 * Cookie flow type.
 	 *
 	 * @var string Type of cookie flow.
 	 */
@@ -45,14 +45,20 @@ class Settings {
 	 * @var array
 	 */
 	private $defaults = array(
-		'workspace'      => '',
-		'client_id'      => '',
-		'client_secret'  => '',
+		'workspace'        => '',
+		'client_id'        => '',
+		'client_secret'    => '',
 
-		'cookie_flow'    => self::ALLOW_OVERWRITE,
-		'cookie_removal' => false,
+		'cookie_flow'      => self::ALLOW_OVERWRITE,
+		'cookie_removal'   => false,
 
-		'access_token'   => '',
+		'consent_required' => true,
+		'consent_text'     => 'I want to join rewards program and I accept all <a href="%s" target="_blank">terms and conditions</a> associated with it.',
+
+		'payout_available' => true,
+		'coupon_available' => true,
+
+		'access_token'     => '',
 
 	);
 
@@ -64,8 +70,20 @@ class Settings {
 	 * @return Settings
 	 */
 	public function __construct( $plugin ) {
-
 		$this->plugin = $plugin;
+	}
+
+	/**
+	 * Add all hooks and execute related code here at single place.
+	 *
+	 * @return void
+	 */
+	public function run() {
+
+		$settings                 = $this->get_settings();
+		$settings['access_token'] = get_option( 'ignico_access_token', new \stdClass() );
+
+		$this->plugin['settings'] = $settings;
 	}
 
 	/**
@@ -77,9 +95,40 @@ class Settings {
 
 		$settings = (array) get_option( $this->plugin['settings_id'] );
 
-		$values = wp_parse_args( $settings, $this->defaults );
+		return wp_parse_args( $settings, $this->defaults );
+	}
 
-		return $values;
+	/**
+	 * Get consent text
+	 *
+	 * @return string
+	 */
+	public function get_consent_text() {
+		$settings = $this->get_settings();
+
+		return sprintf( strip_tags( __( $settings['consent_text'], 'ignico' ), '<a>' ), get_permalink( wc_terms_and_conditions_page_id() ) );
+	}
+
+	/**
+	 * Check if payout withdrawal is available
+	 *
+	 * @return bool
+	 */
+	public function is_payout_available() {
+		$settings = $this->get_settings();
+
+		return (bool) $settings['payout_available'];
+	}
+
+	/**
+	 * Check if coupon generation option is available
+	 *
+	 * @return bool
+	 */
+	public function is_coupon_available() {
+		$settings = $this->get_settings();
+
+		return (bool) $settings['coupon_available'];
 	}
 
 	/**
@@ -129,18 +178,5 @@ class Settings {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Add all hooks and execute related code here at single place.
-	 *
-	 * @return void
-	 */
-	public function run() {
-
-		$settings                 = $this->get_settings();
-		$settings['access_token'] = get_option( 'ignico_access_token', new \stdClass() );
-
-		$this->plugin['settings'] = $settings;
 	}
 }

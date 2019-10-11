@@ -36,6 +36,20 @@ class Fields {
 	}
 
 	/**
+	 * Render text field
+	 *
+	 * @param string $name    Select field name.
+	 * @param string $value   Select field value.
+	 *
+	 * @return void
+	 */
+	public function text( $name, $value = '' ) {
+		?>
+		<input type="text" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" class="regular-text" />
+		<?php
+	}
+
+	/**
 	 * Render select field
 	 *
 	 * @param string $name    Select field name.

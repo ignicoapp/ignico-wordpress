@@ -1,0 +1,21 @@
+/**
+ * Reset marings on content elements
+ */
+@mixin reset-content-elements() {
+  > h1,
+  > h2,
+  > h3,
+  > p,
+  > ul,
+  > div,
+  > span,
+  > form {
+    &:first-child {
+      margin-top: 0 !important;
+    }
+
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+}

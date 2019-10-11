@@ -47,6 +47,8 @@ class Init {
 	 */
 	private function load_dependencies() {
 
+		require_once __DIR__ . '/functions.php';
+
 		$this->plugin['admin/settings'] = new Settings( $this->plugin );
 		$this->plugin['admin/form']     = new FormInit( $this->plugin );
 		$this->plugin['admin/pages']    = new PagesInit( $this->plugin );

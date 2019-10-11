@@ -1,21 +1,34 @@
 import gulp from 'gulp'
+import clean from 'gulp-clean';
+
+import config from './config'
 
 import './stylesheet';
+import './javascript';
 import './bump';
 
+/**
+ * Remove .checksums file
+ */
+gulp.task('clean', function () {
+    return gulp.src(config.src + '/../.checksums', { allowEmpty: true }).pipe(clean());
+
+});
+
+gulp.task('inspect', gulp.series([
+    'javascript:inspect'
+]));
+
+gulp.task('build', gulp.series([
+    'clean',
+    'stylesheet:build',
+    'javascript:build'
+]));
+
 gulp.task('watch', gulp.parallel( [
-    'watch:stylesheet'
+    'build',
+    'stylesheet:watch',
+    'javascript:watch'
 ] ));
 
-gulp.task('build:dev', gulp.series([
-	'stylesheet:development'
-]));
-
-gulp.task('build:prod', gulp.series([
-	'stylesheet:production'
-]));
-
-gulp.task('dev', gulp.series([
-    'build:dev',
-    'watch'
-]));
+gulp.task('default', gulp.series(['build']));

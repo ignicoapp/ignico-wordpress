@@ -4,6 +4,8 @@ namespace IgnicoWordPress\Api\Res;
 
 use IgnicoWordPress\Api\AbstractRes;
 
+use IgnicoWordPress\Api\Http\Message\Request;
+
 /**
  * Contractor module
  *
@@ -18,14 +20,28 @@ class Action extends AbstractRes {
 	private $endpoint = '/actions';
 
 	/**
-	 * Add action
+	 * Create action
 	 *
-	 * @param array $data
+	 * @param array $params
 	 *
 	 * @return array
 	 */
-	public function add( $data ) {
-		$request  = $this->buildRequest( 'post', $this->endpoint, $data );
+	public function create( $params ) {
+		$request  = $this->buildRequest( Request::METHOD_POST, $this->endpoint, $params );
+		$response = $this->getHttpClient()->sendRequest( $request );
+
+		return $this->parseBody( $response );
+	}
+
+	/**
+	 * List actions
+	 *
+	 * @param array $params
+	 *
+	 * @return array
+	 */
+	public function all( $params = array() ) {
+		$request  = $this->buildRequest( Request::METHOD_GET, $this->endpoint, $params );
 		$response = $this->getHttpClient()->sendRequest( $request );
 
 		return $this->parseBody( $response );
