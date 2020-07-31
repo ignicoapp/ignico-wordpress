@@ -66,6 +66,25 @@ Additionally you can also configure cookie settings of the plugin in „Settings
 * Go to Ignico admin panel -> Actions -> Actions list - you should see your order on the list
 
 == Frequently Asked Questions ==
+ 
+= Where can I read more about Ignico? =
+ 
+You can read more on official Ignico website: http://igni.co
+ 
+= How can I get API access token (Client ID and Client Secret Key)? =
+ 
+Please visit Admin panel -> Integrations -> OAuth Clients and generate new client. Credentials will show up on the screen once clicking on the button: “Create and show client credentials”.
+ 
+After you create a new client, you will be presented with Client ID and Client Secret. Please note, you should copy and save them in a safe place because they will be displayed only once. If you lose them, don’t worry. You can simply create another client and revoke the old one.
+ 
+= How can I configure referral rewards for program members? =
+ 
+This is what you do in Ignico Admin Panel in Motivation Plan Sections. You can set your bonuses based on predefined rules. Please make sure you set bonuses that are based on TRANSACTIONS (as these are the type of action that is send through Ignico for WordPress plugin).
+ 
+= How can I develop my own integration with Ignico? =
+ 
+If you feel like Ignico for WordPress plugin is not enough for you, please study our [Ignico API documentation](http://api.igni.co/).
+
 
 == Changelog ==
 
