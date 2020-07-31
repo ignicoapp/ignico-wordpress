@@ -10,6 +10,14 @@ namespace IgnicoWordPress\WooCommerce;
 
 use \IgnicoWordPress\Core\Init as CoreInit;
 
+use \IgnicoWordPress\WooCommerce\Registration\Init as RegistrationInit;
+use \IgnicoWordPress\WooCommerce\Checkout\Init as CheckoutInit;
+use \IgnicoWordPress\WooCommerce\Order\Init as OrderInit;
+use \IgnicoWordPress\WooCommerce\MyAccount\Init as MyAccountInit;
+use \IgnicoWordPress\WooCommerce\Coupon\Init as CouponInit;
+use \IgnicoWordPress\WooCommerce\Payout\Init as PayoutInit;
+
+
 /**
  * Initial class to manage woocommerce functionalities
  *
@@ -33,10 +41,7 @@ class Init {
 	 * @return Init
 	 */
 	public function __construct( $plugin ) {
-
 		$this->plugin = $plugin;
-
-		$this->load_dependencies();
 	}
 
 	/**
@@ -44,10 +49,20 @@ class Init {
 	 *
 	 * @return void
 	 */
-	private function load_dependencies() {
+	public function load() {
+		$this->plugin['woocommerce/registration'] = new RegistrationInit( $this->plugin );
+		$this->plugin['woocommerce/checkout']     = new CheckoutInit( $this->plugin );
+		$this->plugin['woocommerce/order']        = new OrderInit( $this->plugin );
+		$this->plugin['woocommerce/myaccount']    = new MyAccountInit( $this->plugin );
+		$this->plugin['woocommerce/coupon']       = new CouponInit( $this->plugin );
+		$this->plugin['woocommerce/payout']       = new PayoutInit( $this->plugin );
 
-		$this->plugin['woocommerce/referral'] = new Referral( $this->plugin );
-		$this->plugin['woocommerce/ignico']   = new Ignico( $this->plugin );
+		$this->plugin['woocommerce/registration']->load();
+		$this->plugin['woocommerce/checkout']->load();
+		$this->plugin['woocommerce/order']->load();
+		$this->plugin['woocommerce/myaccount']->load();
+		$this->plugin['woocommerce/coupon']->load();
+		$this->plugin['woocommerce/payout']->load();
 	}
 
 	/**
@@ -56,7 +71,11 @@ class Init {
 	 * @return void
 	 */
 	public function run() {
-		$this->plugin['woocommerce/referral']->run();
-		$this->plugin['woocommerce/ignico']->run();
+		$this->plugin['woocommerce/registration']->run();
+		$this->plugin['woocommerce/checkout']->run();
+		$this->plugin['woocommerce/order']->run();
+		$this->plugin['woocommerce/myaccount']->run();
+		$this->plugin['woocommerce/coupon']->run();
+		$this->plugin['woocommerce/payout']->run();
 	}
 }

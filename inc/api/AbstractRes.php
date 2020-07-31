@@ -86,13 +86,14 @@ abstract class AbstractRes {
 	 *
 	 * @param string $method   Http method
 	 * @param string $endpoint Url endpoint
-	 * @param array  $data     Array of data
+	 * @param array  $params   Array of params
 	 *
 	 * @return Request
 	 */
-	protected function buildRequest( $method, $endpoint, $data ) {
-		$url  = $this->formatUrl( $endpoint );
-		$body = $this->formatBody( $data );
+	protected function buildRequest( $method, $endpoint, $params ) {
+
+		$url = $this->formatUrl( $method, $endpoint, $params );
+		$body = $this->formatBody( $method, $params );
 
 		return new Request( $method, $url, $this->headers, $body );
 	}
@@ -103,6 +104,8 @@ abstract class AbstractRes {
 	 * @param ResponseInterface $response
 	 *
 	 * @return \stdClass
+	 *
+	 * @throws \Exception When unsupported Content-Type header in headers.
 	 */
 	protected function parseBody( $response ) {
 		return $this->parseResponse( $response->getBody()->getContents() );
@@ -111,26 +114,36 @@ abstract class AbstractRes {
 	/**
 	 * Format body to send, based on content type in header
 	 *
-	 * @param $data
+	 * @param string $method Http method
+	 * @param array  $params Array of params
 	 *
-	 * @return string
+	 * @return string|null
 	 *
 	 * @throws \Exception When unsupported content type header.
 	 */
-	private function formatBody( $data ) {
+	private function formatBody( $method, $params ) {
+
+		if(
+			$method !== Request::METHOD_POST &&
+			$method !== Request::METHOD_PUT &&
+			$method !== Request::METHOD_PATCH
+		) {
+			return null;
+		}
+
 		$contentTypeFormat = 'Content-Type: %s';
 
 		$contentTypeJson    = sprintf( $contentTypeFormat, self::MEDIA_TYPE_JSON );
 		$contentTypeJsonApi = sprintf( $contentTypeFormat, self::MEDIA_TYPE_JSON_API );
 
 		if ( in_array( $contentTypeJson, $this->headers ) || in_array( $contentTypeJsonApi, $this->headers ) ) {
-			return json_encode( $data );
+			return json_encode( $params );
 		}
 
 		$contentTypeForm = sprintf( $contentTypeFormat, self::MEDIA_TYPE_FORM );
 
 		if ( in_array( $contentTypeForm, $this->headers ) ) {
-			return http_build_query( $data );
+			return http_build_query( $params );
 		}
 
 		throw new \Exception( 'Can not format request body to send data. Unsupported Content-Type header in headers.' );
@@ -141,7 +154,7 @@ abstract class AbstractRes {
 	 *
 	 * @param string $body
 	 *
-	 * @return array
+	 * @return \stdClass
 	 *
 	 * @throws \Exception When unsupported accept header.
 	 */
@@ -161,11 +174,20 @@ abstract class AbstractRes {
 	/**
 	 * Format url based on $inputFormat
 	 *
-	 * @param string $endpoint
+	 * @param string $method   Http method
+	 * @param string $endpoint Url endpoint
+	 * @param array  $params   Array of params
 	 *
 	 * @return UriInterface
 	 */
-	private function formatUrl( $endpoint ) {
-		return new Uri( $this->baseUrl . $endpoint );
+	private function formatUrl( $method, $endpoint, $params ) {
+
+		$url = $this->baseUrl . $endpoint;
+
+		if( $method === Request::METHOD_GET ) {
+			$url = $url . '?' . http_build_query( $params );
+		}
+
+		return new Uri( $url );
 	}
 }

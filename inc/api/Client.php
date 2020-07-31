@@ -7,6 +7,9 @@ use IgnicoWordPress\Api\Http\Client as HttpClient;
 
 use IgnicoWordPress\Api\Res\Authorization;
 use IgnicoWordPress\Api\Res\Action;
+use IgnicoWordPress\Api\Res\User;
+use IgnicoWordPress\Api\Res\Wallet;
+use IgnicoWordPress\Api\Res\Transaction;
 
 /**
  * The class responsible for authenticate and manage client with oauth2
@@ -85,6 +88,27 @@ class Client {
 	 */
 	public function action() {
 		return new Action( $this->httpClient, $this->baseUrl, $this->headers() );
+	}
+
+	/**
+	 * User resource
+	 */
+	public function user() {
+		return new User( $this->httpClient, $this->baseUrl, $this->headers() );
+	}
+
+	/**
+	 * Wallet resource
+	 */
+	public function wallet() {
+		return new Wallet( $this->httpClient, $this->baseUrl, $this->headers() );
+	}
+
+	/**
+	 * Transaction resource
+	 */
+	public function transaction() {
+		return new Transaction( $this->httpClient, $this->baseUrl, $this->headers() );
 	}
 
 	/**

@@ -1,0 +1,46 @@
+.ignico-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -1rem;
+  margin-left: -1rem;
+}
+
+.ignico-col-1,
+.ignico-col-2,
+.ignico-col-3,
+.ignico-col-4,
+.ignico-col-5,
+.ignico-col-6,
+.ignico-col-7,
+.ignico-col-8,
+.ignico-col-9,
+.ignico-col-10,
+.ignico-col-11,
+.ignico-col-12 {
+  position: relative;
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.ignico-col-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.ignico-col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .ignico-col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .ignico-col-md-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

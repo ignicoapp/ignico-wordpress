@@ -1,0 +1,18 @@
+@mixin text-fields($pseudo-class: "") {
+  textarea#{$pseudo-class},
+  input[type="text"]#{$pseudo-class},
+  input[type="password"]#{$pseudo-class},
+  input[type="datetime"]#{$pseudo-class},
+  input[type="datetime-local"]#{$pseudo-class},
+  input[type="date"]#{$pseudo-class},
+  input[type="month"]#{$pseudo-class},
+  input[type="time"]#{$pseudo-class},
+  input[type="week"]#{$pseudo-class},
+  input[type="number"]#{$pseudo-class},
+  input[type="email"]#{$pseudo-class},
+  input[type="url"]#{$pseudo-class},
+  input[type="search"]#{$pseudo-class},
+  input[type="tel"]#{$pseudo-class} {
+    @content;
+  }
+}

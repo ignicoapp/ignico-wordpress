@@ -46,8 +46,12 @@ class Init {
 	 */
 	private function load_dependencies() {
 
-		$this->plugin['ignico/client']   = new Client( $this->plugin );
-		$this->plugin['ignico/referral'] = new Referral( $this->plugin );
+		require_once __DIR__ . '/functions.php';
+
+		$this->plugin['ignico/client']     = new Client( $this->plugin );
+		$this->plugin['ignico/repository'] = new Repository( $this->plugin );
+		$this->plugin['ignico/service']    = new Service( $this->plugin );
+		$this->plugin['ignico/referrer']   = new Referrer( $this->plugin );
 	}
 
 	/**
@@ -57,6 +61,6 @@ class Init {
 	 */
 	public function run() {
 
-		$this->plugin['ignico/referral']->run();
+		$this->plugin['ignico/referrer']->run();
 	}
 }

@@ -11,9 +11,12 @@
 
 namespace IgnicoWordPress\Core;
 
+use Psr\Log\LogLevel;
+
 use IgnicoWordPress\Admin\Init as AdminInit;
 use IgnicoWordPress\Ignico\Init as IgnicoInit;
 
+use IgnicoWordPress\WordPress\Init as WordPressInit;
 use IgnicoWordPress\WooCommerce\Init as WooCommerceInit;
 use IgnicoWordPress\EasyDigitalDownloads\Init as EasyDigitalDownloadsInit;
 
@@ -126,6 +129,14 @@ class Init extends Container {
 		$this['notification/form/field/required'] = __( '"%s" field is required and cannot be empty.', 'ignico' );
 
 		/**
+		 * Notification informing user that provided field is not type of bool
+		 *
+		 * @var string
+		 */
+		/* Translators: %s is administration form field name */
+		$this['notification/form/field/bool'] = __( 'Provided value is not valid. "%s" value should be type of bool.', 'ignico' );
+
+		/**
 		 * Notification informing user that provided workspace is not valid
 		 *
 		 * @var string $notification_form_field_workspace
@@ -145,6 +156,34 @@ class Init extends Container {
 		 * @var string $notification_form_field_cookie_removal
 		 */
 		$this['notification/form/field/cookie_removal'] = __( 'Provided value is not valid cookie removal value. Cookie removal value should be type of bool.', 'ignico' );
+
+		/**
+		 * Notification informing user that provided user creation registration value is not valid
+		 *
+		 * @var string
+		 */
+		$this['notification/form/field/user_create_register'] = __( 'Provided value is not valid user creation registration field value. User creation registration field should be one of available values.', 'ignico' );
+
+		/**
+		 * Notification informing user that provided user creation checkout value is not valid
+		 *
+		 * @var string
+		 */
+		$this['notification/form/field/user_create_checkout'] = __( 'Provided value is not valid user creation checkout field value. User creation checkout field should be one of available values.', 'ignico' );
+
+		/**
+		 * Notification informing user that provided user creation rewards programme page value is not valid
+		 *
+		 * @var string
+		 */
+		$this['notification/form/field/user_create_my_account_page'] = __( 'Provided value is not valid user creation rewards programme page field value. User creation rewards programme page field should be one of available values.', 'ignico' );
+
+		/**
+		 * Notification informing user that provided my account page value is not valid
+		 *
+		 * @var string
+		 */
+		$this['notification/form/field/my_account_page'] = __( 'Provided value is not valid. Cookie removal value should be type of bool.', 'ignico' );
 
 	}
 
@@ -170,7 +209,9 @@ class Init extends Container {
 	private function load_core_dependencies() {
 
 		$this['loader'] = new Loader( $this );
+		$this['logger'] = new Logger( $this );
 		$this['notice'] = new Notice( $this );
+		$this['assets'] = new Assets( $this );
 	}
 
 	/**
@@ -182,8 +223,10 @@ class Init extends Container {
 	 */
 	private function load_dependencies() {
 
-		$this['admin']  = new AdminInit( $this );
-		$this['ignico'] = new IgnicoInit( $this );
+		$this['admin']     = new AdminInit( $this );
+		$this['ignico']    = new IgnicoInit( $this );
+		$this['wordpress'] = new WordPressInit( $this );
+		$this['wordpress']->load();
 
 		/**
 		 * Initialize WooCommerce module only when WooCommerce plugin is installed
@@ -191,6 +234,7 @@ class Init extends Container {
 
 		if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 			$this['woocommerce'] = new WooCommerceInit( $this );
+			$this['woocommerce']->load();
 		}
 
 		/**
@@ -226,6 +270,8 @@ class Init extends Container {
 
 		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 
+		$this['assets']->run();
+
 		$this['admin']->run();
 		$this['ignico']->run();
 
@@ -242,6 +288,11 @@ class Init extends Container {
 		if ( in_array( 'easy-digital-downloads/easy-digital-downloads.php', $active_plugins, true ) ) {
 			$this['edd']->run();
 		}
+
+		/**
+		 * Initialize logger class
+		 */
+		$this['logger']->init( WP_CONTENT_DIR . '/logs', LogLevel::DEBUG, [ '.log_' ] );
 
 		$this['notice']->run();
 

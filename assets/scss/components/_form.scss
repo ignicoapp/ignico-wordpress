@@ -1,0 +1,15 @@
+.ignico-form {
+  @include text-fields() {
+    display: block;
+    width: 100%;
+  }
+}
+
+.ignico-label {
+  width: 100%;
+}
+
+.ignico-errors {
+  color: #e11133;
+  font-size: 0.8rem;
+}

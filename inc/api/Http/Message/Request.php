@@ -5,13 +5,15 @@ namespace IgnicoWordPress\Api\Http\Message;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
+use Fig\Http\Message\RequestMethodInterface;
+
 /**
  * The class responsible for providing normalized request message object for
  * http client.
  *
  * @package IgnicoWordPress\Api\Http\Message
  */
-class Request extends Message implements RequestInterface {
+class Request extends Message implements RequestInterface, RequestMethodInterface {
 
 	/**
 	 * Request target

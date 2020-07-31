@@ -1,0 +1,79 @@
+/**
+ * Spacing
+ *
+ * Control the default styling of most Bootstrap elements by modifying these
+ * variables. Mostly focused on spacing.
+ * You can add more entries to the$spacers map, should you need more variation.
+ */
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: ($spacer * 0.25),
+  2: ($spacer * 0.5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 2),
+  6: ($spacer * 3),
+  7: ($spacer * 4),
+  8: ($spacer * 5)
+);
+
+@for $i from 0 to 8 {
+  $size: map-get($spacers, $i);
+
+  .ignico-my-#{$i} {
+    margin-top: $size;
+    margin-bottom: $size;
+  }
+
+  .ignico-mx-#{$i} {
+    margin-left: $size;
+    margin-right: $size;
+  }
+
+  .ignico-mt-#{$i} {
+    margin-top: $size;
+  }
+
+  .ignico-mb-#{$i} {
+    margin-bottom: $size;
+  }
+
+  .ignico-ml-#{$i} {
+    margin-left: $size;
+  }
+
+  .ignico-mr-#{$i} {
+    margin-right: $size;
+  }
+}
+
+@for $i from 0 to 8 {
+  $size: map-get($spacers, $i);
+
+  .ignico-py-#{$i} {
+    padding-top: $size;
+    padding-bottom: $size;
+  }
+
+  .ignico-px-#{$i} {
+    padding-left: $size;
+    padding-right: $size;
+  }
+
+  .ignico-pt-#{$i} {
+    padding-top: $size;
+  }
+
+  .ignico-pb-#{$i} {
+    padding-bottom: $size;
+  }
+
+  .ignico-pl-#{$i} {
+    padding-left: $size;
+  }
+
+  .ignico-pr-#{$i} {
+    padding-right: $size;
+  }
+}

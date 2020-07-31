@@ -23,8 +23,8 @@ let options = minimist(process.argv.slice(2), defaults);
 gulp.task('bump:packages', function() {
 
 	return gulp.src([
-		config.src + '/composer.json',
-		config.src + '/package.json',
+		config.root + '/composer.json',
+		config.root + '/package.json',
 	])
 		.pipe(bump({
 			type: options.type
@@ -39,7 +39,7 @@ gulp.task('bump:packages', function() {
 gulp.task('bump:plugin', function () {
 
 	return gulp.src([
-		config.src + '/ignico.php',
+		config.root + '/ignico.php',
 	])
 		.pipe(bump({
 			type: options.type
@@ -76,7 +76,7 @@ gulp.task('bump:constant', function () {
 	);
 
 	return gulp.src([
-		config.src + '/ignico.php',
+		config.root + '/ignico.php',
 	])
 		.pipe(bump({
 			type: options.type,
