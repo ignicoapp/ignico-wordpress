@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d732a581a228f374098638ac3cdb2587",
+    "content-hash": "28f067f7f6490d36667599a9410816ad",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -2082,7 +2082,7 @@
                 "array_column",
                 "column"
             ],
-            "abandoned": true,
+            "abandoned": "it-for-free/array_column",
             "time": "2015-03-20T22:07:39+00:00"
         },
         {
@@ -2144,7 +2144,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/5.4.2"
+                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/5.4.2",
+                "reference": "5.4.2"
             },
             "require": {
                 "php": ">=5.3.2",
@@ -3971,6 +3972,7 @@
             ],
             "description": "Composer plugin for splitting a generated autoloader into two distinct parts.",
             "homepage": "https://wp-cli.org",
+            "abandoned": true,
             "time": "2017-08-03T08:40:16+00:00"
         },
         {

@@ -458,7 +458,7 @@
 
 		<echo msg="Generate changelog based on commits." />
 
-		<exec command="./node_modules/.bin/conventional-changelog -p angular -i CHANGELOG.md -s -r 0" />
+		<exec command="./node_modules/.bin/conventional-changelog -p angular -i CHANGELOG.md -s" />
 	</target>
 
 	<!-- ============================================  -->

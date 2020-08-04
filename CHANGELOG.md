@@ -1,11 +1,18 @@
-<a name="0.3.2"></a>
-## [0.3.2](https://github.com/ignicoapp/ignico-wordpress/compare/0.3.1...0.3.2) (2019-08-21)
+# [0.5.0](https://github.com/ignicoapp/ignico-wordpress/compare/0.3.0...0.5.0) (2020-08-04)
+
+
+### Features
+
+* Add rewards program dashboard ([109e58f](https://github.com/ignicoapp/ignico-wordpress/commit/109e58f8117e4b5da3aae728b4860eb59327b5d4))
+
+
+<a name="0.3.0"></a>
+## [0.3.0](https://github.com/ignicoapp/ignico-wordpress/compare/0.2.0...0.3.0) (2019-08-21)
 
 
 ### Features
 
 * Add referral cookie settings ([93a2d8f](https://github.com/ignicoapp/ignico-wordpress/commit/93a2d8f))
-
 
 
 <a name="0.2.0"></a>
