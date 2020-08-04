@@ -3,7 +3,7 @@ Contributors: ignico, kierzniak
 Tags: referrals, affiliate, loyalty, gamification, social selling, compensation, mlm, network marketing, growth hacking
 Requires at least: 3.8
 Requires PHP: 5.6
-Tested up to: 5.2.2
+Tested up to: 5.4.2
 Stable tag: trunk
 License: GPL-2.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -87,6 +87,16 @@ If you feel like Ignico for WordPress plugin is not enough for you, please study
 
 
 == Changelog ==
+
+= 0.5.0 =
+
+= Features =
+
+* Add rewards program dashboard
+
+= 0.3.2 =
+
+* Update WordPress tested up version
 
 = 0.3.1 =
 
